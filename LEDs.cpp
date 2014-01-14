@@ -1,10 +1,10 @@
-#include "types.h" //Portable Typedefs
-
+#include "PPI.h"
+#include "LEDs.h"
 
 LEDs::LEDs(unsigned char bitMapping)
 {
 	u8 ControlByte = (ModeSel | AInp);  // normal mode, port A input, B, C output
-	PPI->Control = (u32) ControlByte;
+	PPI->Control = (int) ControlByte;
 	bitMap = bitMapping;
 	PortCData = 0;
 	reset();
@@ -12,7 +12,7 @@ LEDs::LEDs(unsigned char bitMapping)
 	
 void LEDs::set()
 {
-	//PortCData = (u32)PPI->PortC;
+	PortCData = (u32)PPI->PortC;
 	PortCData = PortCData | bitMap;
 	PPI->PortC = (u32)PortCData;
 }
@@ -20,7 +20,7 @@ void LEDs::set()
 void LEDs::set(int seconds)
 {
 	set();
-	u32 i;
+	int i;
 	for(i=1500000*seconds; i>0; i--);
 	reset();
 }

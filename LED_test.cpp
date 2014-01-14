@@ -1,7 +1,6 @@
+#include "LEDs.h"
+#include "types.h"
 
-
-
-#include "lab.cpp"
 // simple LED example using direct port access
 int main()
 {
@@ -12,10 +11,7 @@ int main()
 	LEDs LED3(D3);
 	LEDs LED4(D4);
 	
-	// set up the control port
-	u8 ControlByte =(ModeSel | AInp);
-	PPI->Control = (u32) ControlByte;
-	
+
 	// wait for a second
 	for(i=3000000; i>0; i--);
 	
