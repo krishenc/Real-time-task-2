@@ -1,40 +1,21 @@
-#include "types.h" //Portable Typedefs
+#include "PPI.h"
 
-
-//PPI Class
-class PPInterface
+comm::UpdatePortA (u32 bitmap, u32 LocalPortA)
 {
-public: 
-	PPInterface();
-	void PortA(u32);
-	void PortB(u32);
-	void PortC(u32);
-	void Control(u32);
-};
-
-	
-PPInterface::PPInterface (void)
-{
-	
-	PPI->Control = (u32)(ModeSel | AInp);
+	PortA = LocalPortA ^ bitmap;
 }
 
-void PPInterface::PortA(u32 PortAData)
+comm::UpdatePortB (u32 bitmap, u32 LocalPortB)
 {
-	PPI->PortA= (u32) PortAData;
+	PortB = LocalPortB ^ bitmap;
 }
 
-void PPInterface::PortB(u32 PortBData)
+comm::UpdatePortC (u32 bitmap, u32 LocalPortC)
 {
-	PPI->PortB= (u32) PortBData;
+	PortA = LocalPortC ^ bitmap;
 }
 
-void PPInterface::PortC(u32 PortCData)
+comm::UpdateControl (u32 bitmap)
 {
-	PPI->PortC= (u32) PortCData;
-}
-
-void PPInterface::Control(u32 ControlData)
-{
-	PPI->Control= (u32) ControlData;
+	Control = bitmap;
 }

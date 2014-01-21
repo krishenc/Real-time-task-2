@@ -8,7 +8,7 @@ struct i8255A
   u32 Control; // only lowest 8 bits used. Offset 0x0C
 };
 // define a pointer to the 8255 structure
-volatile i8255A *PPI = (i8255A *) 0xFFFF1C00;
+//volatile i8255A *PPI = (i8255A *) 0xFFFF1C00;
 
 // bit masks to enable mode setting for the Control port
 #define ModeSel 0x80
@@ -25,3 +25,19 @@ volatile i8255A *PPI = (i8255A *) 0xFFFF1C00;
 #define BOut 	0x00  
 #define CHOut 	0x00  
 #define CLOut	0x00 
+
+
+class comm {
+	private: 
+	u32 PortA;
+	u32 PortB;
+	u32 PortC;
+	u32 Control;
+	
+	public:
+	int UpdatePortA();
+	int UpdatePortB();
+	int UpdatePortC();
+	int UpdateControl();
+
+};

@@ -1,10 +1,11 @@
-#include "PPI.h"
 #include "LEDs.h"
+#include "PPI.h"
+volatile comm *PPI = (comm *) 0xFFFF1C00;
 
 LEDs::LEDs(unsigned char bitMapping)
 {
-	u8 ControlByte = (ModeSel | AInp);  // normal mode, port A input, B, C output
-	PPI->Control = (int) ControlByte;
+	//u8 ControlByte = (ModeSel | AInp);  // normal mode, port A input, B, C output
+	//PPI.Control ((u32) ControlByte);
 	bitMap = bitMapping;
 	PortCData = 0;
 	reset();
@@ -12,9 +13,9 @@ LEDs::LEDs(unsigned char bitMapping)
 	
 void LEDs::set()
 {
-	PortCData = (u32)PPI->PortC;
+	//PortCData = (u32)PPI->PortC;
 	PortCData = PortCData | bitMap;
-	PPI->PortC = (u32)PortCData;
+	//PPI->PortC = (u32)PortCData;
 }
 	
 void LEDs::set(int seconds)
@@ -29,7 +30,7 @@ void LEDs::reset()
 {
 	//PortCData = (u32)PPI->PortC;
 	PortCData = PortCData & ~bitMap;
-	PPI->PortC = (u32)PortCData;
+	//PPI->PortC = (u32)PortCData;
 }
 	
 bool LEDs::get()
