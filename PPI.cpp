@@ -1,21 +1,40 @@
 #include "PPI.h"
 
-comm::UpdatePortA (u32 bitmap, u32 LocalPortA)
-{
-	PortA = LocalPortA ^ bitmap;
+ void i8255A::SetPortB(u32 Bits )volatile {
+PortB = Bits;
 }
 
-comm::UpdatePortB (u32 bitmap, u32 LocalPortB)
-{
-	PortB = LocalPortB ^ bitmap;
+u32 i8255A::GetPortC() volatile{
+	return (PortC);
 }
 
-comm::UpdatePortC (u32 bitmap, u32 LocalPortC)
-{
-	PortA = LocalPortC ^ bitmap;
+void i8255A::SetControl(u32 Bits) volatile{
+Control = Bits;
 }
 
-comm::UpdateControl (u32 bitmap)
+volatile i8255A *PPI = (i8255A *) (0xFFFF1C00);
+
+comm::comm(){
+PortA = 0;
+PortB = 0x07;
+PortC = 0;
+
+}
+
+
+void comm::UpdatePortB (u32 bitmap)
 {
-	Control = bitmap;
+	PortB = PortB ^ bitmap;
+	PPI->SetPortB(PortB);
+}
+
+u32 comm::GetPortC (u32 AccessBit)
+{
+	PortC = PPI->GetPortC();
+	return (PortC);
+}
+
+void comm::UpdateControl (u32 bitmap)
+{
+	PPI->SetControl(bitmap);
 }

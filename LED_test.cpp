@@ -10,9 +10,9 @@ int main()
 	u32 LocalPortA;
 	u32 LocalPortB;
 	u32 LocalPortC;
-	volatile comm *PPI = (comm *) 0xFFFF1C00;
+	comm *PPI = (comm *) 0xFFFF1C00;
 	u8 ControlByte = (ModeSel | AMode0 | AInp | BMode1 | BOut | CHInp | CLInp);
-	PPI.UpdateControl ((u32) ControlByte);
+	PPI->UpdateControl ((u32) ControlByte);
 	u32 i; // used for the timer
 	// define LED objects, all in their initial off state
 	LEDs LED1(D1);

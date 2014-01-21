@@ -1,9 +1,23 @@
 
 #include "Buzzer.h"
+#include "PPI.h"
 
-Buzzer::Buzzer()
-{
-//	u8 ControlByte = (ModeSel | AMode0 | AInp | BMode1 | BOut | CHInp | CLInp);
-//  (*PPI).Control = (u32) ControlByte;
+
+Buzzer::Buzzer(){
+
+//ARMBoard = Comms; 
 
 }
+
+void Buzzer::Buzz(){
+/*
+int i;
+
+ARMBoard.UpdatePortB(BuzzerBit);
+for(i=1500000*0.5; i>0; i--);
+ARMBoard.UpdatePortB(BuzzerBit);
+for(i=1500000*5; i>0; i--);
+*/
+}
+
+
