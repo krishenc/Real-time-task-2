@@ -19,7 +19,7 @@ Control = Bits;
 
 comm::comm(){
 PortA = 0;
-PortB = 0x07;
+PortB = 0;
 PortC = 0;
 PPI = (i8255A *) (0xFFFF1C00);
 
