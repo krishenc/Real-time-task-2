@@ -20,23 +20,6 @@
 #define CHOut 	0x00  
 #define CLOut	0x00 
 
-
-class comm {
-
-	
-	public:
-	comm();
-	void UpdatePortB(u32);
-	u32 GetPortC(u32);
-	void UpdateControl(u32);
-	
-	private: 
-	u32 PortA;
-	u32 PortB;
-	u32 PortC;
-	u32 Control;
-};
-
 class i8255A
 {
 private:
@@ -50,3 +33,22 @@ public:
 	u32 GetPortC() volatile;
 	void SetControl(u32) volatile;
 };
+
+class comm {
+
+	
+	public:
+	comm();
+	void UpdatePortB(u32);
+	u32 GetPortC(u32);
+	void UpdateControl(u32);
+	
+	
+	private: 
+	u32 PortA;
+	u32 PortB;
+	u32 PortC;
+	u32 Control;
+	i8255A *PPI;
+};
+

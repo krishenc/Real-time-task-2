@@ -3,10 +3,11 @@
 class Buzzer
 {
 public:
-	Buzzer();
+	Buzzer(comm*);
 	void Buzz ();
+	void Buzz2 ();
 private:
 	int BuzzerStatus;
-	//comm *ARMBoard;
+	comm *ARMBoard;
 
 };
