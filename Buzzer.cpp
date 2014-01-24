@@ -8,8 +8,8 @@
 Buzzer::Buzzer(comm *Comms){
 
 ARMBoard = Comms; 
-cout << "Comms# ="<< Comms << "\n";
-cout << "Buzzer# ="<< ARMBoard << "\n";
+//cout << "Comms# ="<< Comms << "\n";
+//cout << "Buzzer# ="<< ARMBoard << "\n";
 }
 
 void Buzzer::Buzz(){
@@ -30,6 +30,14 @@ ARMBoard->UpdatePortB(BuzzerBit);
 for(i=1500000*0.25; i>0; i--);
 ARMBoard->UpdatePortB(BuzzerBit);
 for(i=1500000*2.5; i>0; i--);
+
+}
+
+void Buzzer::Toggle(){
+
+int i;
+ARMBoard->UpdatePortB(BuzzerBit);
+for(i=1500000*0.5; i>0; i--);
 
 }
 

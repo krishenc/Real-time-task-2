@@ -49,6 +49,6 @@ class comm {
 	u32 PortB;
 	u32 PortC;
 	u32 Control;
-	i8255A *PPI;
+	volatile i8255A *PPI;
 };
 
