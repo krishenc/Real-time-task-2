@@ -5,10 +5,11 @@ class Buzzer
 public:
 	Buzzer(comm*);
 	void Buzz ();
-	void Buzz2 ();
-	void Toggle ();
+
 private:
 	int BuzzerStatus;
-	comm *ARMBoard;
+	comm *ARMBoard;	
+	void On();
+	void Off();
 
 };

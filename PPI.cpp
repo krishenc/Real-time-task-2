@@ -26,12 +26,14 @@ PPI = (i8255A *) (0xFFFF1C00);
 }
 
 
-void comm::UpdatePortB (u32 bitmap)
+void comm::SetPortB (u32 bitmap)
 {
-	PortB = PortB ^ bitmap;
+	PortB = bitmap;
 	PPI->SetPortB(PortB);
-
-	
+}
+u32 comm::GetLocalPortB ()
+{
+	return (PortB);
 }
 
 u32 comm::GetPortC (u32 AccessBit)

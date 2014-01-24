@@ -12,12 +12,12 @@ ARMBoard.UpdateControl ((u32) ControlByte);
 
 //cout << "Main# ="<< &ARMBoard << "\n";
 Buzzer Buzzer1(&ARMBoard);
-Buzzer Buzzer2(&ARMBoard);
+
 
 while(true)
 {
-Buzzer1.Toggle();
-Buzzer2.Toggle();
+Buzzer1.Buzz();
+
 }
 
 

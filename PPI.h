@@ -39,7 +39,8 @@ class comm {
 	
 	public:
 	comm();
-	void UpdatePortB(u32);
+	void SetPortB(u32);
+	u32 GetLocalPortB();
 	u32 GetPortC(u32);
 	void UpdateControl(u32);
 	
