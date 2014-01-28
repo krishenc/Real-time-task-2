@@ -1,5 +1,6 @@
 #include "PPI.h"
 #include <iostream>
+#include <bitset>
 
  void i8255A::SetPortB(u32 Bits )volatile {
 PortB = Bits;
@@ -29,6 +30,8 @@ PPI = (i8255A *) (0xFFFF1C00);
 void comm::SetPortB (u32 bitmap)
 {
 	PortB = bitmap;
+	//bitset<8> x(PortB);
+	cout << "PortB = "<< PortB << "\n";
 	PPI->SetPortB(PortB);
 }
 u32 comm::GetLocalPortB ()
@@ -36,7 +39,7 @@ u32 comm::GetLocalPortB ()
 	return (PortB);
 }
 
-u32 comm::GetPortC (u32 AccessBit)
+u32 comm::GetPortC ()
 {
 	PortC = PPI->GetPortC();
 	return (PortC);

@@ -18,7 +18,8 @@
 #define BMode0 	0x00  
 #define BOut 	0x00  
 #define CHOut 	0x00  
-#define CLOut	0x00 
+#define CLOut	0x00
+#define SwitchBit	0x80 
 
 class i8255A
 {
@@ -41,7 +42,7 @@ class comm {
 	comm();
 	void SetPortB(u32);
 	u32 GetLocalPortB();
-	u32 GetPortC(u32);
+	u32 GetPortC();
 	void UpdateControl(u32);
 	
 	
