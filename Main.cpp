@@ -19,7 +19,6 @@ int main ()
 	u8 ControlByte = (ModeSel | AMode0 | AInp | BMode0 | BOut | CHInp | CLInp);
 	ARMBoard.UpdateControl ((u32) ControlByte);
 
-	//cout << "Main# ="<< &ARMBoard << "\n";
 	Buzzer Buzzer1(&ARMBoard);
 	SevenSeg Seg(&ARMBoard);
 	Motor Motor1 (&ARMBoard);
@@ -30,36 +29,139 @@ int main ()
 	Button Prog1(&ARMBoard,Prog1Mask);
 	Button Door(&ARMBoard,DoorMask);
 	
-	
-	//Set Switch to Latch
-	//u32 PortB = ARMBoard.GetLocalPortB();
-	//PortB = PortB & 0x80;
-	//ARMBoard.SetPortB(PortB);
-	//End of Set Swicth to Lacth
-
 	while(true)
 	{
 		int i;
-		for(i=0; i<10 ; i++){
-			Motor1.SetDrive(true);
-			Buzzer1.Buzz();
-			//Motor1.SetDirection(true);
+		
+		cout << "+------------------------------+\n";
+		cout << "|  Washing Machine Driver Test |\n";
+		cout << "+------------------------------+\n";
+		
+		//Test Prog1 Button
+		softTimer(1);
+		cout << "\n--------------------------------\n";
+		cout << "Press Prog1 Button (right)\n...\n"; 
+		bool tested = true;
+		while(tested)
+		{	
+			if(Prog1.GetButtonState()) tested=false;
+		}
+		cout << "Prog1 Button Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//Test Prog2 Button
+		softTimer(1);
+		cout << "Press Prog2 Button (middle)\n...\n";
+		tested = true;
+		while(tested)
+		{
+			if(Prog2.GetButtonState()) tested=false;
+		}
+		cout << "Prog2 Button Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//Test Prog3 Button
+		softTimer(1);
+		cout << "Press Prog3 Button (left)\n...\n";		
+		tested = true;
+		while(tested)
+		{
+			if(Prog3.GetButtonState()) tested=false;
+		}
+		cout << "Prog3 Button Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//Test Cancel Button
+		softTimer(1);
+		cout << "Press Cancel Button\n...\n";
+		tested = true;
+		while(tested)
+		{
+			if(Cancel.GetButtonState()) tested=false;
+		}
+		cout << "Cancel Button Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//Test Accept Button
+		softTimer(1);
+		cout << "Press Accept Button\n...\n";
+		tested = true;
+		while(tested)
+		{
+			if(Accept.GetButtonState()) tested=false;
+		}
+		cout << "Accept Button Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		
+		//Test Door Button
+		softTimer(1);
+		cout << "Open Door\n...\n";
+		tested = true;
+		while(tested)
+		{
+			if(Door.GetButtonState()) tested=false;
+		}
+		cout << "Door Opened\n";
+		softTimer(1);
+		cout << "Close Door\n...\n";
+		tested = true;
+		while(tested)
+		{
+			if(!Door.GetButtonState()) tested=false;
+		}
+		cout << "Close Closed\n";
+		softTimer(1);
+		cout << "Door Button Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//SevenSegTest
+		softTimer(1);
+		cout << "Testing Seven Segment Display 0-9\n";
+		for(i=0; i<10; i++)
+		{
 			Seg.UpdateDisplay(i);
+			cout << "Displaying " << i << "...\n";
 			softTimer(1);
-			//cout << "Motor Speed= "<< (Motor1.GetSpeed()*100) << "% \n";
-			Motor1.GetSpeed();
+		}
+		cout << "Seven Segment Display Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//Buzzer Test
+		softTimer(1);
+		cout << "Testing Buzzer\n";
+		for(i=0; i<2; i++)
+		{
+			Buzzer1.BuzzSMS();
+			softTimer(0.75);
+		}
+		cout << "Buzzer Test Complete\n";
+		cout << "--------------------------------\n";
+		
+		//Motor Test
+		softTimer(1);
+		cout << "Testing Motor\n";
+		for(i=0; i<2; i++)
+		{
+			cout << "Motor ON & CW\n";
+			Motor1.SetDirection(false);
+			Motor1.SetDrive(true);
 			softTimer(1);
+			
+			cout << "Motor OFF\n" ;
 			Motor1.SetDrive(false);
 			softTimer(1);
-			Motor1.SetDirection(false);
+			
+			cout << "Motor ON & ACW\n";
+			Motor1.SetDirection(true);
+			Motor1.SetDrive(true);
+			softTimer(1);
+			
+			cout << "Motor OFF\n";
+			Motor1.SetDrive(false);
+			softTimer(1);
 		}
-		/*
-		//Test Buttons
-		if(Accept.GetButtonState()) cout << "Appect Button Pressed \n";
-		if(Cancel.GetButtonState()) cout << "Cancel Button Pressed \n";
-		if(Prog3.GetButtonState()) cout << "Prog3 Button Pressed \n";
-		if(Prog2.GetButtonState()) cout << "Prog2 Button Pressed \n";
-		if(Prog1.GetButtonState()) cout << "Prog1 Button Pressed \n";
-		if(Door.GetButtonState()) cout << "Door Button Pressed \n";*/
+		cout << "Motor Test Complete\n";
+		cout << "--------------------------------\n\n";
 	}
 }

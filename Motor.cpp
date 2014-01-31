@@ -45,16 +45,17 @@ float Motor::GetSpeed(){
 	int rawSpeed[5000];
 	double SpeedTotal = 0;
 	double avSpeed;
-	u32 PortC;
+	int tempSpeed;
 	for(i=0; i<5000; i++)
 	{
-		PortC = ARMBoard->GetPortC();
-		if((PortC & MotorSpeedMask) == MotorSpeedMask )	rawSpeed[i] = 1;
-		else rawSpeed[i]=0;
+		rawSpeed[i] = ARMBoard->GetPortC();
+		//if((PortC & MotorSpeedMask) == MotorSpeedMask )	rawSpeed[i] = 1;
+		//else rawSpeed[i]=0;
 	}
 	for(i=0; i<5000; i++)
 	{
-		SpeedTotal = SpeedTotal + rawSpeed[i];
+		if((rawSpeed[i] & MotorSpeedMask) == MotorSpeedMask )	SpeedTotal = SpeedTotal + 1;
+		//SpeedTotal = SpeedTotal + rawSpeed[i];
 	}
 	
 	avSpeed = SpeedTotal / 50;

@@ -4,7 +4,7 @@ class Buzzer
 {
 	public:
 		Buzzer(comm*);
-		void Buzz ();
+		void BuzzSMS ();
 
 	private:
 		int BuzzerStatus;

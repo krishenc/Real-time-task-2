@@ -23,11 +23,50 @@ void Buzzer::Off()
 	ARMBoard->SetPortB(PortB);
 }
 
-void Buzzer::Buzz()
+void Buzzer::BuzzSMS()
 {
 	int i;
+	//Morse Code (SMS)
+	//S
 	On();
-	for(i=1500000*0.1; i>0; i--);
+	for(i=1500000*0.05; i>0; i--);
 	Off();
-	for(i=1500000*1; i>0; i--);
+	for(i=1500000*0.05; i>0; i--);
+	
+	On();
+	for(i=1500000*0.05; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
+	
+	On();
+	for(i=1500000*0.05; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
+	
+	//M
+	On();
+	for(i=1500000*0.15; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
+	
+	On();
+	for(i=1500000*0.15; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
+	
+	//S
+	On();
+	for(i=1500000*0.05; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
+	
+	On();
+	for(i=1500000*0.05; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
+	
+	On();
+	for(i=1500000*0.05; i>0; i--);
+	Off();
+	for(i=1500000*0.05; i>0; i--);
 }
