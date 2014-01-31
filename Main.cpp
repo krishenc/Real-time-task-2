@@ -30,6 +30,7 @@ int main ()
 	Button Prog1(&ARMBoard,Prog1Mask);
 	Button Door(&ARMBoard,DoorMask);
 	
+	
 	//Set Switch to Latch
 	//u32 PortB = ARMBoard.GetLocalPortB();
 	//PortB = PortB & 0x80;
@@ -38,24 +39,25 @@ int main ()
 
 	while(true)
 	{
-		/*int i;
+		int i;
 		for(i=0; i<10 ; i++){
 			Motor1.SetDrive(true);
 			Buzzer1.Buzz();
 			Motor1.SetDirection(true);
 			Seg.UpdateDisplay(i);
+			cout << Motor1.GetSpeed() << "\n";
 			softTimer(1);
 			Motor1.SetDrive(false);
 			softTimer(1);
 			Motor1.SetDirection(false);
-		}*/
-		
+		}
+		/*
 		//Test Buttons
 		if(Accept.GetButtonState()) cout << "Appect Button Pressed \n";
 		if(Cancel.GetButtonState()) cout << "Cancel Button Pressed \n";
 		if(Prog3.GetButtonState()) cout << "Prog3 Button Pressed \n";
 		if(Prog2.GetButtonState()) cout << "Prog2 Button Pressed \n";
 		if(Prog1.GetButtonState()) cout << "Prog1 Button Pressed \n";
-		if(Door.GetButtonState()) cout << "Door Button Pressed \n";
+		if(Door.GetButtonState()) cout << "Door Button Pressed \n";*/
 	}
 }

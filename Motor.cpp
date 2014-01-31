@@ -38,3 +38,26 @@ void Motor::SetDirection(bool dir)
 		ARMBoard->SetPortB(PortB);
 	}
 }
+
+u32 Motor::GetSpeed(){
+
+	int i;
+	int rawSpeed[5000];
+	int SpeedTotal = 0;
+	int avSpeed;
+	u32 PortC;
+	for(i=0; i<5000; i++)
+	{
+		PortC = ARMBoard->GetPortC();
+		if((PortC & MotorSpeedMask) == MotorSpeedMask )	rawSpeed[i] = 1;
+		else rawSpeed[i]=0;
+	}
+	for(i=0; i<5000; i++)
+	{
+		SpeedTotal = SpeedTotal + rawSpeed[i];
+	}
+	
+	avSpeed = SpeedTotal / 5000;
+	
+	return (avSpeed);
+}
