@@ -39,12 +39,12 @@ void Motor::SetDirection(bool dir)
 	}
 }
 
-u32 Motor::GetSpeed(){
+float Motor::GetSpeed(){
 
 	int i;
 	int rawSpeed[5000];
-	int SpeedTotal = 0;
-	int avSpeed;
+	double SpeedTotal = 0;
+	double avSpeed;
 	u32 PortC;
 	for(i=0; i<5000; i++)
 	{
@@ -57,7 +57,9 @@ u32 Motor::GetSpeed(){
 		SpeedTotal = SpeedTotal + rawSpeed[i];
 	}
 	
-	avSpeed = SpeedTotal / 5000;
+	avSpeed = SpeedTotal / 50;
+	cout << SpeedTotal << " ";
+	cout << "Motor Speed= "<< (avSpeed) << "% \n";
 	
 	return (avSpeed);
 }

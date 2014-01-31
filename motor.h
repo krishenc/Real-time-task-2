@@ -9,7 +9,7 @@ class Motor
 		void SetDrive(bool);
 		void SetDirection(bool);
 		void SetSpeed(int);
-		u32 GetSpeed();
+		float GetSpeed();
 
 	private:
 		comm *ARMBoard;

@@ -28,7 +28,7 @@ void comm::SetPortB (u32 bitmap)
 {
 	PortB = bitmap;
 	//bitset<8> x(PortB);
-	cout << "PortB = "<< PortB << "\n";
+	//cout << "PortB = "<< PortB << "\n";
 	PPI->SetPortB(PortB);
 }
 u32 comm::GetLocalPortB ()

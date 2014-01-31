@@ -43,9 +43,11 @@ int main ()
 		for(i=0; i<10 ; i++){
 			Motor1.SetDrive(true);
 			Buzzer1.Buzz();
-			Motor1.SetDirection(true);
+			//Motor1.SetDirection(true);
 			Seg.UpdateDisplay(i);
-			cout << Motor1.GetSpeed() << "\n";
+			softTimer(1);
+			//cout << "Motor Speed= "<< (Motor1.GetSpeed()*100) << "% \n";
+			Motor1.GetSpeed();
 			softTimer(1);
 			Motor1.SetDrive(false);
 			softTimer(1);
