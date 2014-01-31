@@ -5,16 +5,14 @@
 #define Prog1Mask 0x02
 #define DoorMask 0x01
 
+class Button
+{
+	private:
+		comm *ARMBoard;
+		u32 ButtonMask;
 
-class Button {
-
-private:
-	comm *ARMBoard;
-	u32 ButtonMask;
-
-public:
-	Button(comm*, u32);
-	bool GetButtonState();
-
+	public:
+		Button(comm*, u32);
+		bool GetButtonState();
 };
 

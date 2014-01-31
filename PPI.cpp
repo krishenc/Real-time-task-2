@@ -2,31 +2,28 @@
 #include <iostream>
 #include <bitset>
 
- void i8255A::SetPortB(u32 Bits )volatile {
-PortB = Bits;
-
-
+void i8255A::SetPortB(u32 Bits )volatile
+{
+	PortB = Bits;
 }
 
-u32 i8255A::GetPortC() volatile{
+u32 i8255A::GetPortC() volatile
+{
 	return (PortC);
 }
 
-void i8255A::SetControl(u32 Bits) volatile{
-Control = Bits;
+void i8255A::SetControl(u32 Bits) volatile
+{
+	Control = Bits;
 }
-
-
-
-comm::comm(){
-PortA = 0;
-PortB = 0;
-PortC = 0;
-PPI = (i8255A *) (0xFFFF1C00);
-
+//------------------------------------------
+comm::comm()
+{
+	PortA = 0;
+	PortB = 0;
+	PortC = 0;
+	PPI = (i8255A *) (0xFFFF1C00);
 }
-
-
 void comm::SetPortB (u32 bitmap)
 {
 	PortB = bitmap;
@@ -38,7 +35,6 @@ u32 comm::GetLocalPortB ()
 {
 	return (PortB);
 }
-
 u32 comm::GetPortC ()
 {
 	PortC = PPI->GetPortC();

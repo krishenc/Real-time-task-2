@@ -2,14 +2,13 @@
 
 class Buzzer
 {
-public:
-	Buzzer(comm*);
-	void Buzz ();
+	public:
+		Buzzer(comm*);
+		void Buzz ();
 
-private:
-	int BuzzerStatus;
-	comm *ARMBoard;	
-	void On();
-	void Off();
-
+	private:
+		int BuzzerStatus;
+		comm *ARMBoard;	
+		void On();
+		void Off();
 };

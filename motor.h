@@ -3,17 +3,15 @@
 
 class Motor
 {
+	public:
+		Motor(comm*);
+		void SetDrive(bool);
+		void SetDirection(bool);
+		void SetSpeed(int);
 
-public:
-	Motor(comm*);
-	void SetDrive(bool);
-	void SetDirection(bool);
-	void SetSpeed(int);
-
-private:
-	comm *ARMBoard;
-	int speed;
-	bool direction; //0=reverse | 1=forward
-	bool drive;
-	
+	private:
+		comm *ARMBoard;
+		int speed;
+		bool direction; //0=reverse | 1=forward
+		bool drive;
 };

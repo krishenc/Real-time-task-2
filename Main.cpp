@@ -6,13 +6,14 @@
 #include "Button.h"
 #include <iostream>
 
-void softTimer(int TimeSecs){
-int i;
-for(i=1500000*TimeSecs; i>0; i--);
+void softTimer(int TimeSecs)
+{
+	int i;
+	for(i=1500000*TimeSecs; i>0; i--);
 }
 
-int main (){
-
+int main ()
+{
 	comm ARMBoard;
 
 	u8 ControlByte = (ModeSel | AMode0 | AInp | BMode0 | BOut | CHInp | CLInp);
@@ -56,10 +57,5 @@ int main (){
 		if(Prog2.GetButtonState()) cout << "Prog2 Button Pressed \n";
 		if(Prog1.GetButtonState()) cout << "Prog1 Button Pressed \n";
 		if(Door.GetButtonState()) cout << "Door Button Pressed \n";
-
-
-
 	}
-
-
 }

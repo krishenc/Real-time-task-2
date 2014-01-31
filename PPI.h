@@ -1,9 +1,5 @@
 #include "types.h"
 
-
-// define a pointer to the 8255 structure
-
-
 // bit masks to enable mode setting for the Control port
 #define ModeSel 0x80
 #define AMode2  0x40
@@ -23,34 +19,32 @@
 
 class i8255A
 {
-private:
-  u32 PortA;   // only lowest 8 bits used. Offset 0x00
-  u32 PortB;   // only lowest 8 bits used. Offset 0x04
-  u32 PortC;   // only lowest 8 bits used. Offset 0x08
-  u32 Control; // only lowest 8 bits used. Offset 0x0C
+	private:
+		u32 PortA;   // only lowest 8 bits used. Offset 0x00
+		u32 PortB;   // only lowest 8 bits used. Offset 0x04
+		u32 PortC;   // only lowest 8 bits used. Offset 0x08
+		u32 Control; // only lowest 8 bits used. Offset 0x0C
   
-public:
-	void SetPortB (u32) volatile;
-	u32 GetPortC() volatile;
-	void SetControl(u32) volatile;
+	public:
+		void SetPortB (u32) volatile;
+		u32 GetPortC() volatile;
+		void SetControl(u32) volatile;
 };
 
-class comm {
-
-	
+class comm
+{
 	public:
-	comm();
-	void SetPortB(u32);
-	u32 GetLocalPortB();
-	u32 GetPortC();
-	void UpdateControl(u32);
-	
-	
+		comm();
+		void SetPortB(u32);
+		u32 GetLocalPortB();
+		u32 GetPortC();
+		void UpdateControl(u32);
+
 	private: 
-	u32 PortA;
-	u32 PortB;
-	u32 PortC;
-	u32 Control;
-	volatile i8255A *PPI;
+		u32 PortA;
+		u32 PortB;
+		u32 PortC;
+		u32 Control;
+		volatile i8255A *PPI;
 };
 
