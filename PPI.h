@@ -17,6 +17,10 @@
 #define CLOut	0x00
 #define SwitchBit	0x80 
 
+//------------------------------------------
+// i8255A class
+// This class is declared by comm at the correct hardware address
+// for port control (as specified in the documentation).
 class i8255A
 {
 	private:
@@ -26,25 +30,54 @@ class i8255A
 		u32 Control; // only lowest 8 bits used. Offset 0x0C
   
 	public:
+		// sets the output bits on PortB
 		void SetPortB (u32) volatile;
+		
+		// returns the bits on PortC
 		u32 GetPortC() volatile;
+		
+		// set the Control bits
 		void SetControl(u32) volatile;
 };
 
+//------------------------------------------
+// comm class
+// This class has reference to a i8255A object declared at the
+// specific hardware address for accessing I/O ports at that address.
 class comm
 {
-	public:
-		comm();
-		void SetPortB(u32);
-		u32 GetLocalPortB();
-		u32 GetPortC();
-		void UpdateControl(u32);
-
 	private: 
+		// These 8 bit numbers are a copy of the data
+		// going out on the port addresses in PPI
 		u32 PortA;
 		u32 PortB;
 		u32 PortC;
 		u32 Control;
+		
+		// This is the reference to i8255A ports (address defined in
+		// comm constructor)
 		volatile i8255A *PPI;
+	
+	public:
+		
+		// class constructor initialises private members
+		comm();
+		
+		// the 32 bit argument is stored in local copy and then 
+		// written to the port via PPI
+		void SetPortB(u32);
+		
+		// returns the private member PortB
+		u32 GetLocalPortB();
+		
+		// returns the 32bit value on PortC (via PPI)
+		u32 GetPortC();
+		
+		// sets the Control bits (via PPI)
+		void UpdateControl(u32);
 };
+
+
+
+
 

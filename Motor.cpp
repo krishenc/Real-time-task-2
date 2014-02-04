@@ -38,7 +38,7 @@ void Motor::SetDirection(bool dir)
 		ARMBoard->SetPortB(PortB);
 	}
 }
-
+/*
 float Motor::GetSpeed(){
 
 	int i;
@@ -63,4 +63,4 @@ float Motor::GetSpeed(){
 	cout << "Motor Speed= "<< (avSpeed) << "% \n";
 	
 	return (avSpeed);
-}
+}*/

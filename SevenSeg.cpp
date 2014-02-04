@@ -2,6 +2,8 @@
 #include "SevenSeg.h"
 //#include <iostream>
 
+// Constructor function requires reference to comm class
+// for accessing hardware port
 SevenSeg::SevenSeg(comm* Comms)
 {
 	ARMBoard = Comms;

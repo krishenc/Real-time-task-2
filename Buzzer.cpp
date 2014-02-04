@@ -2,6 +2,12 @@
 #include "Buzzer.h"
 //#include <iostream>
 
+//------------------------------------------
+
+// Buzzer class functions
+
+// Constructor function requires reference to comm class
+// for accessing hardware port
 Buzzer::Buzzer(comm *Comms)
 {
 	ARMBoard = Comms; 
@@ -9,6 +15,7 @@ Buzzer::Buzzer(comm *Comms)
 	//cout << "Buzzer# ="<< ARMBoard << "\n";
 }
 
+// Function for turning the buzzer ON
 void Buzzer::On()
 {
 	u32 PortB = ARMBoard->GetLocalPortB();
@@ -16,6 +23,7 @@ void Buzzer::On()
 	ARMBoard->SetPortB(PortB);
 }
 
+// Function for turning the buzzer OFF
 void Buzzer::Off()
 {
 	u32 PortB = ARMBoard->GetLocalPortB();
@@ -23,6 +31,7 @@ void Buzzer::Off()
 	ARMBoard->SetPortB(PortB);
 }
 
+// Test function for buzzer
 void Buzzer::BuzzSMS()
 {
 	int i;
