@@ -2,65 +2,43 @@
 #include "Motor.h"
 #include <iostream>
 
+// Constructor function requires reference to comm class
+// for accessing hardware port
 Motor::Motor(comm* Comms)
 {
 	ARMBoard = Comms;
 }
 
-void Motor::SetDrive(bool on_off)
+// Function set the motor ON or OFF
+void Motor::SetDrive(bool drive)
 {
-	drive = on_off;
 	u32 PortB = ARMBoard->GetLocalPortB();
 	if (drive == true)
 	{
 		PortB = PortB | MotorBit;
 		ARMBoard->SetPortB(PortB);
 	}
-	if (drive == false)
+	else
 	{
 		PortB = PortB & (~MotorBit);
 		ARMBoard->SetPortB(PortB);
 	}
 } 
 
-void Motor::SetDirection(bool dir)
+// Function to set the direction of the Motor
+// FALSE = CW, TRUE = ACW
+void Motor::SetDirection(bool direction)
 {
-	direction = dir;
 	u32 PortB = ARMBoard->GetLocalPortB();
+	
 	if (direction == true)
 	{
 		PortB = PortB | MotorDirBit;
 		ARMBoard->SetPortB(PortB);
 	}
-	if (direction == false)
+	else
 	{
 		PortB = PortB & (~MotorDirBit);
 		ARMBoard->SetPortB(PortB);
 	}
 }
-/*
-float Motor::GetSpeed(){
-
-	int i;
-	int rawSpeed[5000];
-	double SpeedTotal = 0;
-	double avSpeed;
-	int tempSpeed;
-	for(i=0; i<5000; i++)
-	{
-		rawSpeed[i] = ARMBoard->GetPortC();
-		//if((PortC & MotorSpeedMask) == MotorSpeedMask )	rawSpeed[i] = 1;
-		//else rawSpeed[i]=0;
-	}
-	for(i=0; i<5000; i++)
-	{
-		if((rawSpeed[i] & MotorSpeedMask) == MotorSpeedMask )	SpeedTotal = SpeedTotal + 1;
-		//SpeedTotal = SpeedTotal + rawSpeed[i];
-	}
-	
-	avSpeed = SpeedTotal / 50;
-	cout << SpeedTotal << " ";
-	cout << "Motor Speed= "<< (avSpeed) << "% \n";
-	
-	return (avSpeed);
-}*/

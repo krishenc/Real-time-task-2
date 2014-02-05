@@ -1,24 +1,18 @@
 #include "PPI.h"
 #include "Buzzer.h"
-//#include <iostream>
-
-//------------------------------------------
-
-// Buzzer class functions
 
 // Constructor function requires reference to comm class
 // for accessing hardware port
 Buzzer::Buzzer(comm *Comms)
 {
 	ARMBoard = Comms; 
-	//cout << "Comms# ="<< Comms << "\n";
-	//cout << "Buzzer# ="<< ARMBoard << "\n";
 }
 
 // Function for turning the buzzer ON
 void Buzzer::On()
 {
 	u32 PortB = ARMBoard->GetLocalPortB();
+	// Modify PortB to set the buzzer bit
 	PortB = PortB | BuzzerBit;
 	ARMBoard->SetPortB(PortB);
 }
@@ -27,6 +21,7 @@ void Buzzer::On()
 void Buzzer::Off()
 {
 	u32 PortB = ARMBoard->GetLocalPortB();
+	// Modify PortB to unset the buzzer bit
 	PortB = PortB & ~BuzzerBit;
 	ARMBoard->SetPortB(PortB);
 }

@@ -4,18 +4,15 @@
 #include "SevenSeg.h"
 #include "Motor.h"
 #include "Button.h"
+#include "SoftTimer.h"
 #include <iostream>
 
-// A timing function for use in the demo
-void softTimer(int TimeSecs)
-{
-	int i;
-	for(i=1500000*TimeSecs; i>0; i--);
-}
-
+// Program that tests the driver functionality
 int main ()
 {
-	// An object called ARMBoard used 
+	int i; // loop variable for testing
+	
+	// An instance of comm class
 	comm ARMBoard;
 
 	// Control port addresses are defined in PPI.h
@@ -25,6 +22,7 @@ int main ()
 	Buzzer Buzzer1(&ARMBoard);
 	SevenSeg Seg(&ARMBoard);
 	Motor Motor1 (&ARMBoard);
+	
 	// The button mask offset addresses are defined in Button.h
 	Button Accept(&ARMBoard,AcceptMask);
 	Button Cancel(&ARMBoard,CancelMask);
@@ -32,17 +30,19 @@ int main ()
 	Button Prog2(&ARMBoard,Prog2Mask);
 	Button Prog1(&ARMBoard,Prog1Mask);
 	Button Door(&ARMBoard,DoorMask);
+	SoftTimer  Timer1;
 	
+	// Loop until the test is complete and the user wishes to exit
 	while(true)
 	{
-		int i; // loop variable
+		
 		
 		cout << "+---------------------------------------+\n";
 		cout << "|  Washing Machine Driver Test          |\n";
 		cout << "+---------------------------------------+\n\n";
 		
 		// Test Prog1 Button
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "-----------------------------------------\n";
 		cout << "Press Prog1 Button (right)\n...\n"; 
 		bool tested = true;
@@ -54,7 +54,7 @@ int main ()
 		cout << "-----------------------------------------\n";
 		
 		// Test Prog2 Button
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Press Prog2 Button (middle)\n...\n";
 		tested = true;
 		while(tested)
@@ -65,7 +65,7 @@ int main ()
 		cout << "-----------------------------------------\n";
 		
 		// Test Prog3 Button
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Press Prog3 Button (left)\n...\n";		
 		tested = true;
 		while(tested)
@@ -76,7 +76,7 @@ int main ()
 		cout << "-----------------------------------------\n";
 		
 		// Test Cancel Button
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Press Cancel Button\n...\n";
 		tested = true;
 		while(tested)
@@ -87,7 +87,7 @@ int main ()
 		cout << "-----------------------------------------\n";
 		
 		// Test Accept Button
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Press Accept Button\n...\n";
 		tested = true;
 		while(tested)
@@ -99,7 +99,7 @@ int main ()
 		
 		
 		// Test Door Button
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Open Door\n...\n";
 		tested = true;
 		while(tested)
@@ -107,7 +107,7 @@ int main ()
 			if(Door.GetButtonState()) tested=false;
 		}
 		cout << "Door Opened\n";
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Close Door\n...\n";
 		tested = true;
 		while(tested)
@@ -115,79 +115,79 @@ int main ()
 			if(!Door.GetButtonState()) tested=false;
 		}
 		cout << "Close Closed\n";
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Door Button Test Complete\n";
 		cout << "-----------------------------------------\n";
 		
 		// SevenSegTest
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Testing Seven Segment Display 0-9\n";
 		for(i=0; i<10; i++)
 		{
 			Seg.UpdateDisplay(i);
 			cout << "Displaying " << i << "...\n";
-			softTimer(1);
+			Timer1.Wait(1);
 		}
+		Seg.ClearDisplay();
+		cout << "Clearing Dispaly " << "...\n";
+		Timer1.Wait(1);
 		cout << "Seven Segment Display Test Complete\n";
 		cout << "-----------------------------------------\n";
 		
 		// Buzzer Test
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Testing Buzzer\n";
-		for(i=0; i<2; i++)
-		{
-			Buzzer1.BuzzSMS();
-			softTimer(0.75);
-		}
+		Buzzer1.BuzzSMS();
+		Timer1.Wait(1);
 		cout << "Buzzer Test Complete\n";
 		cout << "-----------------------------------------\n";
 		
 		// Motor Test
-		softTimer(1);
+		Timer1.Wait(1);
 		cout << "Testing Motor\n";
-		for(i=0; i<2; i++)
-		{
-			cout << "Motor ON & CW\n";
-			Motor1.SetDirection(false);
-			Motor1.SetDrive(true);
-			softTimer(1);
+		cout << "Motor ON & CW\n";
+		Motor1.SetDirection(false);
+		Motor1.SetDrive(true);
+		Timer1.Wait(1);
 			
-			cout << "Motor OFF\n" ;
-			Motor1.SetDrive(false);
-			softTimer(1);
+		cout << "Motor OFF\n" ;
+		Motor1.SetDrive(false);
+		Timer1.Wait(1);
 			
-			cout << "Motor ON & ACW\n";
-			Motor1.SetDirection(true);
-			Motor1.SetDrive(true);
-			softTimer(1);
+		cout << "Motor ON & ACW\n";
+		Motor1.SetDirection(true);
+		Motor1.SetDrive(true);
+		Timer1.Wait(1);
 			
-			cout << "Motor OFF\n";
-			Motor1.SetDrive(false);
-			softTimer(1);
-		}
+		cout << "Motor OFF\n";
+		Motor1.SetDrive(false);
+		Timer1.Wait(1);
+
 		cout << "Motor Test Complete\n";
 		cout << "-----------------------------------------\n\n";
 		
-		// Test complete, ask user to repeat the test
-		softTimer(1);
+		// Test complete, ask user if they wish to repeat the test
+		Timer1.Wait(1);
 		cout << "+---------------------------------------+\n";
 		cout << "|  Washing Machine Driver Test Complete |\n";
 		cout << "|  > Press Accept to repeat the test,   |\n";
 		cout << "|  > Press Cancel to exit               |\n";
 		cout << "|  ...                                  |\n";
 		
-		softTimer(1);
+		Timer1.Wait(1);
 		tested = true;
 		while(tested)
 		{
 			if(Cancel.GetButtonState())
 			{
+				// Exit the program if the Cancel button is pressed
 				cout << "|  Exiting Washing Machine Driver Test  |\n";
 				cout << "+---------------------------------------+\n";
 				return(0);
 			}
 			else if(Accept.GetButtonState())
 			{
+				// Repeat the program if the Accept button is pressed
 				cout << "|  Repeating Washing Machine Driver Test|\n";
 				cout << "+---------------------------------------+\n";
 				tested=false;

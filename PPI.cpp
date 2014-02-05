@@ -37,12 +37,10 @@ comm::comm()
 void comm::SetPortB (u32 bitmap)
 {
 	PortB = bitmap;
-	//bitset<8> x(PortB);
-	//cout << "PortB = "<< PortB << "\n";
 	PPI->SetPortB(PortB);
 }
 
-// returns the private member PortB
+// returns the private member PortB (the latest PortB output)
 u32 comm::GetLocalPortB ()
 {
 	return (PortB);
