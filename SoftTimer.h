@@ -1,6 +1,6 @@
 #include "types.h"
 
-// Timer class to pause execution on the target for the argument
+// SoftTimer class to pause execution on the target for the argument
 // time in secs
 class SoftTimer
 {
