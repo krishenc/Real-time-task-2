@@ -14,10 +14,12 @@ class Program
 {
 	private:
 
-		ProgramData* ColourWash; 
-		ProgramData* WhiteWash;
+		ProgramData* Cycles;
+		int* Programs;
 		int currentProgram;
-		int cuurentStatus;
+		int cuurentCycle;
+		int MaxPrograms;
+		int MaxCycles;
 		
 		
 	public:

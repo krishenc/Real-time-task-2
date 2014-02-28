@@ -13,8 +13,7 @@
 #define MotorSpeedLow 1
 #define MotorSpeedOff 0
 
-#define MaxPrograms 2
-#define MaxCycles 11
+
 
 ProgramData::ProgramData()
 {
@@ -22,6 +21,7 @@ ProgramData::ProgramData()
 	Time = 0;
 	Speed = 0;
 }
+#include <fstream>
 
 void ProgramData::SetData(int status, int time, int speed)
 {
@@ -33,9 +33,13 @@ void ProgramData::SetData(int status, int time, int speed)
 
 Program::Program()
 {
+	ifstream ProgFile ( "Programs.txt" );
+	
+
 	ColourWash = new ProgramData[MaxCycles];
 	WhiteWash = new ProgramData[MaxCycles];
 	
+	//Program Int=1
 	ColourWash[0].SetData(Fill,		5, MotorSpeedOff);
 	ColourWash[1].SetData(Heat,		2, MotorSpeedOff);
 	ColourWash[2].SetData(Wash,		3, MotorSpeedLow);
@@ -47,6 +51,7 @@ Program::Program()
 	ColourWash[8].SetData(Dry,		5, MotorSpeedOff);
 	ColourWash[9].SetData(Complete,	0, MotorSpeedOff);
 	
+	//Program Int=0
 	WhiteWash[ 0].SetData(Fill,		5, MotorSpeedOff);
 	WhiteWash[ 1].SetData(Heat,		6, MotorSpeedOff);
 	WhiteWash[ 2].SetData(Wash,		4, MotorSpeedLow);
@@ -58,9 +63,21 @@ Program::Program()
 	WhiteWash[ 8].SetData(Spin,		4, MotorSpeedLow);
 	WhiteWash[ 9].SetData(Dry,		5, MotorSpeedOff);
 	WhiteWash[10].SetData(Complete,	0, MotorSpeedOff);
-	
 
+}
 
-		
+void Program::SetProgram(int ChosenProgram)
+{
+	currentProgram = ChosenProgram;
+	currentCycle = -1;	
+}
+
+int Program::GetNextStage()
+{
+	currentCycle++;
+	switch(currentProgram)
+	{
+		case 0:
+			
 	
 }
