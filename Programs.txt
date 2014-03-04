@@ -1,16 +1,16 @@
-ColourWash
-Fill	5	Off
-Heat	2	Off
-Wash	3	Low
-Empty	4	Off
-Fill	4	Off
-Rinse	4	Low
-Empty	3	Off
-Spin	6	High
-Dry	5	Off
-Complete	0	Off
+1.ColourWash
+Fill,	5,	Off
+Heat,	2,	Off
+Wash,	3,	Low
+Empty,	4,	Off
+Fill,	4,	Off
+Rinse,	4,	Low
+Empty,	3,	Off
+Spin,	6	High
+Dry,	5,	Off
+Complete,	0,	Off
 
-WhiteWash
+2.WhiteWash
 Fill	5	Off
 Heat	6	Off
 Wash	4	Low
