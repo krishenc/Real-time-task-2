@@ -5,12 +5,16 @@
 #include "Motor.h"
 #include "Button.h"
 #include "SoftTimer.h"
+#include "programlist.h"
 #include <iostream>
 
 // Program that tests the driver functionality
 int main ()
 {
 	int i; // loop variable for testing
+	
+	// An instance of Manager class
+	//Manager Manager1;
 	
 	// An instance of comm class
 	comm ARMBoard;
@@ -32,6 +36,32 @@ int main ()
 	Button Door(&ARMBoard,DoorMask);
 	SoftTimer  Timer1;
 	
+    bool validProgramSelected = false; // Used to determine whether the program selected is valid
+	int selectedProgram = 0;           // This is used to get the program selection from the user
+	int numberOfPrograms;              // The number of valid programs
+	while (~validProgramSelected)
+	{
+	cout << "accept state " << Accept.GetButtonState() << endl;
+		if (Accept.GetButtonState())
+		{
+			if (Prog1.GetButtonState())
+			{
+				selectedProgram = selectedProgram | 1;
+			}
+			if (Prog2.GetButtonState())
+			{
+				selectedProgram = selectedProgram | 2;
+			}
+			if (Prog3.GetButtonState())
+			{
+				selectedProgram = selectedProgram | 4;
+			}
+			
+		}
+		
+	}
+	
+	/*
 	// Loop until the test is complete and the user wishes to exit
 	while(true)
 	{
@@ -194,5 +224,5 @@ int main ()
 			}
 		}
 
-	}
+	}*/
 }
