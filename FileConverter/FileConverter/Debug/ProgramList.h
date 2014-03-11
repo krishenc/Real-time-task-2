@@ -43,4 +43,4 @@ WhiteWash[9].SetData(Dry	5	Off);
 WhiteWash[10].SetData(Complete	0	Off); 
 ProgramArray[1] = WhiteWash*; 
 
-
+#define NumberofPrograms 2

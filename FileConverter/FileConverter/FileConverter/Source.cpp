@@ -105,6 +105,7 @@ int main(int argc, char* argv[])
 			program++;
 		}
 	}
+	outputString.append("#define NumberofPrograms " + std::to_string(program-1));
 	input.close();
 	
 	output << outputString << endl;
