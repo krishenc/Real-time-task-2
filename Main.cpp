@@ -36,17 +36,14 @@ int main ()
 	Button Door(&ARMBoard,DoorMask);
 	SoftTimer  Timer1;
 	
-    bool validProgramSelected = false; // Used to determine whether the program selected is valid
-	int selectedProgram = 0;           // This is used to get the program selection from the user
-	int numberOfPrograms;              // The number of valid programs
-	while (~validProgramSelected)
+   	int selectedProgram = 0; // This is used to get the program selection from the user
+	while (selectedProgram <= NumberOfPrograms) // Make sure the user cant select a program that does not exist
 	{
-	cout << "accept state " << Accept.GetButtonState() << endl;
 		if (Accept.GetButtonState())
 		{
 			if (Prog1.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 1;
+				selectedProgram = selectedProgram | 1; // Bitwise
 			}
 			if (Prog2.GetButtonState())
 			{
@@ -58,6 +55,7 @@ int main ()
 			}
 			
 		}
+		
 		
 	}
 	
