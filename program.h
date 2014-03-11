@@ -1,14 +1,4 @@
-class ProgramData
-{
-	private: 
-		int Status;
-		int Time;
-		int Speed;
-		
-	public:
-		ProgramData();
-		void SetData(int, int, int);
-};
+
 
 class Program
 {

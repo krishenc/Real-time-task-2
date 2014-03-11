@@ -37,27 +37,34 @@ int main ()
 	SoftTimer  Timer1;
 	
    	int selectedProgram = 0; // This is used to get the program selection from the user
-	while (selectedProgram <= NumberOfPrograms) // Make sure the user cant select a program that does not exist
+   	validProgramSelection = false; // Make sure the selected program is valid
+   	
+	while (~validProgramSelection)
 	{
 		if (Accept.GetButtonState())
 		{
 			if (Prog1.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 1; // Bitwise
+				selectedProgram = selectedProgram | 1; // Populate the least significant bit in selectedProgram
 			}
 			if (Prog2.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 2;
+				selectedProgram = selectedProgram | 2; // Populate the middle bit in selectedProgram
 			}
 			if (Prog3.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 4;
+				selectedProgram = selectedProgram | 4; // Populate the most significant bit in selectedProgram
+			}
+			
+			// Make sure the user cant select a program that does not exist
+			if (selectedProgram <= NumberOfPrograms)
+			{
+				validProgramSelection = true;
 			}
 			
 		}
-		
-		
 	}
+	cout << "Valid program selected : " << selectedProgram;
 	
 	/*
 	// Loop until the test is complete and the user wishes to exit
