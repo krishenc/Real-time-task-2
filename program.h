@@ -1,5 +1,6 @@
-#define MaxCycles 3
 #define MaxPrograms 2
+#define MaxCycles 10
+
 
 #define Empty 1
 #define Fill 2
@@ -30,8 +31,6 @@ class WashCycle
 		void SetData(int, int, int);
 };
 
-
-
 class Program
 {
 	private:
@@ -45,7 +44,6 @@ class Program
 		Program();
 
 		void SetProgram(int);
-		int GetNextStage();
-		
+		int GetNextStage();	
 };
 
