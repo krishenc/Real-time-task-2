@@ -24,7 +24,7 @@ class WashCycle
 	private:
 		int Status;
 		int Time;
-		int Speed;
+		int motorControl;
 
 	public:
 		WashCycle();
