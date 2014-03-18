@@ -1,6 +1,6 @@
 //This file is created automatically from the programs.txt
 
-class ProgramData
+class WashCycle
 { 
 	private:
 		int Status;
@@ -8,18 +8,18 @@ class ProgramData
 		int Speed;
 
 	public:
-		ProgramData();
+		WashCycle();
 		void SetData(int, int, int);
 };
 
-ProgramData::ProgramData()
+WashCycle::WashCycle()
 {
 	Status = 0;
 	Time = 0;
 	Speed = 0;
 }
 
-void ProgramData::SetData(int status, int time, int speed)
+void WashCycle::SetData(int status, int time, int speed)
 {
 	Status = status;
 	Time = time;
@@ -41,9 +41,9 @@ int * ProgramArray = new int[2];
 // 		not sure but this line of code may not create 10 
 // 		ProgramData objects... so might need to loop through array
 // 		creating new objects at each element??
-
+/*
 //ColourWash is defined below
-ProgramData * ColourWash = new ProgramData[10]; 
+ProgramData * ColourWash = new WashCycle[10]; 
 ColourWash[0].SetData(Fill,	5,	Off); 
 ColourWash[1].SetData(Heat,	2,	Off); 
 ColourWash[2].SetData(Wash,	3,	Low); 
@@ -57,7 +57,7 @@ ColourWash[9].SetData(Complete,	0,	Off);
 ProgramArray[0] = &ColourWash; 
 
 //WhiteWash is defined below
-ProgramData * WhiteWash = new ProgramData[11]; 
+ProgramData * WhiteWash = new WashCycle[11]; 
 WhiteWash[0].SetData(Fill,	5,	Off); 
 WhiteWash[1].SetData(Heat,	6,	Off); 
 WhiteWash[2].SetData(Wash,	4,	Low); 
@@ -70,5 +70,5 @@ WhiteWash[8].SetData(Spin,	4,	Low);
 WhiteWash[9].SetData(Dry,	5,	Off); 
 WhiteWash[10].SetData(Complete,	0,	Off); 
 ProgramArray[1] = &WhiteWash; 
-
+*/
 #define NumberofPrograms 2

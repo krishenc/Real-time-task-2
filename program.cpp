@@ -1,5 +1,7 @@
 #include "program.h"
 
+#define MaxPrograms = 10
+
 #define Empty 1
 #define Fill 2
 #define Heat 3
@@ -14,7 +16,23 @@
 #define MotorSpeedOff 0
 
 
-
+Program::Program()
+{
+	Programs = new WashCycle*[MaxPrograms];
+	
+	Programs[0] = new WashCycle[MaxCycles] {
+		WashCycle(Fill,	5,	Off),
+		WashCycle(Fill,	5,	Off),
+		WashCycle(Complete, 0, Off)
+	}
+	
+	Programs[1] = new WashCycle[MaxCycles] {
+		WashCycle(Spin, 6, High),
+		WashCycle(Rinse, 8, Low),
+		WashCycle(Complete, 0, Off)
+	}
+	
+}
 
 
 

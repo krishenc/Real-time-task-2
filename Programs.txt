@@ -15,14 +15,14 @@ Dry,	5,	Off
 Complete,	0,	Off
 
 2.WhiteWash
-Fill	5	Off
-Heat	6	Off
-Wash	4	Low
-Empty	4	Off
-Fill	4	Off
-Rinse	5	Low
-Empty	3	Off
-Spin	8	High
-Spin	4	Low
-Dry	5	Off
-Complete	0	Off
+Fill,	5,	Off
+Heat,	6,	Off
+Wash,	4,	Low
+Empty,	4,	Off
+Fill,	4,	Off
+Rinse,	5,	Low
+Empty,	3,	Off
+Spin,	8,	High
+Spin,	4,	Low
+Dry,	5,	Off
+Complete,	0,	Off

@@ -5,8 +5,9 @@
 #include "Motor.h"
 #include "Button.h"
 #include "SoftTimer.h"
-#include "programlist.h"
+//#include "programlist.h"
 #include <iostream>
+
 
 // Program that tests the driver functionality
 int main ()
@@ -37,9 +38,9 @@ int main ()
 	SoftTimer  Timer1;
 	
    	int selectedProgram = 0; // This is used to get the program selection from the user
-   	validProgramSelection = false; // Make sure the selected program is valid
-   	
-	while (~validProgramSelection)
+   	bool validProgramSelection = false; // Make sure the selected program is valid
+   	/*
+	while (!validProgramSelection)
 	{
 		if (Accept.GetButtonState())
 		{
@@ -57,13 +58,13 @@ int main ()
 			}
 			
 			// Make sure the user cant select a program that does not exist
-			if (selectedProgram <= NumberOfPrograms)
+			if (selectedProgram <= NumberofPrograms)
 			{
 				validProgramSelection = true;
 			}
 			
 		}
-	}
+	}*/
 	cout << "Valid program selected : " << selectedProgram;
 	
 	/*

@@ -4,11 +4,9 @@ class Program
 {
 	private:
 
-		ProgramData* Cycles;
-		int* Programs;
+		WashCycle** Programs;
 		int currentProgram;
 		int cuurentCycle;
-		int MaxPrograms;
 		int MaxCycles;
 		
 		
