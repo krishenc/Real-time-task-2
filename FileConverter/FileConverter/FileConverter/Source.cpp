@@ -4,15 +4,15 @@
 #include <string>
 using namespace std;
 
-bool fstreamGood(const fstream &);
-bool ifstreamGood(const ifstream &);
-bool ofstreamGood(const ofstream &);
+bool fstreamGood(const fstream &, const string);
+bool ifstreamGood(const ifstream &, const string);
+bool ofstreamGood(const ofstream &, const string);
 
-bool fstreamGood(const fstream &stream)
+bool fstreamGood(const fstream &stream, const string fileName)
 {
 	if (!stream.good()) 
 	{
-		std::cout << "file not found." << endl;
+		std::cout << "file " + fileName + " not found." << endl;
 		std::cout << "press any button to continue..." << endl;
 		std::cin.ignore();
 		return false;
@@ -22,11 +22,11 @@ bool fstreamGood(const fstream &stream)
 		return true;
 	}
 }
-bool ifstreamGood(const ifstream &stream)
+bool ifstreamGood(const ifstream &stream, const string fileName)
 {
 	if (!stream.good()) 
 	{
-		std::cout << "file not found." << endl;
+		std::cout << "file " + fileName + " not found." << endl;
 		std::cout << "press any button to continue..." << endl;
 		std::cin.ignore();
 		return false;
@@ -36,11 +36,11 @@ bool ifstreamGood(const ifstream &stream)
 		return true;
 	}
 }
-bool ofstreamGood(const ofstream &stream)
+bool ofstreamGood(const ofstream &stream, const string fileName)
 {
 	if (!stream.good()) 
 	{
-		std::cout << "file not found." << endl;
+		std::cout << "file " + fileName + " not found." << endl;
 		std::cout << "press any button to continue..." << endl;
 		std::cin.ignore();
 		return false;
@@ -55,9 +55,11 @@ int main(int argc, char* argv[])
 {
 	ifstream programtxt;
 	ifstream programh_in;
+	ifstream programcpp_in;
 	ofstream programh_out;
-	ofstream programcpp;
-	
+	ofstream programcpp_out;
+
+	string fileName;
 	string readLine;
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,18 +67,21 @@ int main(int argc, char* argv[])
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	// open program.txt for reading
-	programtxt.open("Programs.txt");
-	if (!ifstreamGood(programtxt)) return 0;
+	fileName = "programs.txt";
+	programtxt.open(fileName);
+	if (!ifstreamGood(programtxt, fileName)) return 0;
 
 	// count the number of program declarations in the file
-	int programCount = 1;
+	cout << "Counting number of programs in programs.txt" << endl;
+	int programCount = 0;
 	while (std::getline(programtxt, readLine))
 	{
-		if ( readLine.find(std::to_string(programCount) + ":") != string::npos)
+		if ( readLine.find(std::to_string(programCount+1) + ":") != string::npos)
 		{
 			programCount++;
 		}
 	}
+	cout << "Found " + std::to_string(programCount) + " programs." << endl;
 	programtxt.close();
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -84,10 +89,12 @@ int main(int argc, char* argv[])
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	// open program.h for reading
-	programh_in.open("Programs.h");
-	if (!ifstreamGood(programh_in)) return 0;
+	fileName = "program.h";
+	programh_in.open(fileName);
+	if (!ifstreamGood(programh_in, fileName)) return 0;
 
 	// write to temp string, but with line replacement
+	cout << "Replacing #define MaxPrograms..." << endl;
 	string strProgramh;
 	while (std::getline(programh_in, readLine))
 	{
@@ -95,72 +102,94 @@ int main(int argc, char* argv[])
 		{
 			readLine = "#define MaxPrograms " + std::to_string(programCount);
 		}
-		strProgramh.append(readLine);
+		strProgramh.append(readLine + "\n");
 	}
+
+	cout << strProgramh << endl;
 
 	// close and reopen program.h for writing
 	programh_in.close();
-	programh_out.open("ProgramsNew.h");
-	if (!ofstreamGood(programh_out)) return 0;
+	fileName = "programNew.h";
+	programh_out.open(fileName);
+	if (!ofstreamGood(programh_out, fileName)) return 0;
 	programh_out << strProgramh << endl;
 	programh_out.close();
 	
-	remove("ProgramsOld.h");
-	rename("Programs.h", "ProgramsOld.h");
-	rename("ProgramsNew.h", "Programs.h");
+	remove("programOld.h");
+	rename("program.h", "programOld.h");
+	rename("programNew.h", "program.h");
 
 	// ~~~~~~~~~~~~~~~~~~~
-	// write Programs.cpp
+	// write programs.cpp
 	// ~~~~~~~~~~~~~~~~~~~
 	
 	// open program.txt for reading
-	programtxt.open("Programs.txt");
-	if (!ifstreamGood(programtxt)) return 0;
+	fileName = "programs.txt";
+	programtxt.open(fileName);
+	if (!ifstreamGood(programtxt, fileName)) return 0;
 
-
-	programh.open("Programs.h", ios::in);
-	if (!input.good()) 
+	// build constructor function definition from txt file
+	cout << "building new constructor function..." << endl;
+	string constructorFunction;
+	int program = 0;
+	while(std::getline(programtxt, readLine))
 	{
-		std::cout << "file not found." << endl;
-		std::cout << "press any button to continue..." << endl;
-		std::cin.ignore();
-		return 0;
-	}
-
-	// replace #define MaxPrograms
-	string readLine;
-	while (std::getline(input, readLine))
-	{
-		int spot = readLine.find("#define MaxPrograms");
-		if ( spot != string::npos)
+		int cycle = 0;
+		// look for new program definition i.e. 1:ColourWash
+		if ( readLine.find(std::to_string(program+1) + ":") != string::npos)
 		{
-			
+			program++;
+			cycle = 0;
+			// look for final cycle definition
+			while(readLine.find("Complete") == string::npos)
+			{
+				std::getline(programtxt, readLine);
+				constructorFunction.append("\tPrograms[" + std::to_string(program) + "][" + std::to_string(cycle++) + "]");
+				constructorFunction.append(" = WashCycle(" + readLine + "); \n");
+			}
 		}
 	}
+	cout << "Constructor function contents:" << endl;
+	cout << constructorFunction << endl;
 
+	// open program.cpp for reading
+	fileName = "program.cpp";
+	programcpp_in.open(fileName);
+	if (!ifstreamGood(programcpp_in, fileName)) return 0;
 
-	// open input file
-	input.open("Programs.txt");
-	//input.open(fileName);
-	if (!input.good()) 
+	// append file to temporary string until we find Program::Program()
+	string strProgramcpp;
+	while (std::getline(programcpp_in, readLine))
 	{
-		std::cout << "file not found." << endl;
-		std::cout << "press any button to continue..." << endl;
-		std::cin.ignore();
-		return 0;
+		if ( readLine.find("Program::Program()") != string::npos)
+		{
+			strProgramcpp.append("Program::Program()\n");
+			strProgramcpp.append("{\n");
+			strProgramcpp.append(constructorFunction);
+			strProgramcpp.append("}\n");
+			break;
+		}
+		strProgramcpp.append(readLine + "\n");
 	}
 
-	output.open("Program.h");
+	programcpp_in.close();
+	fileName = "programNew.cpp";
+	programcpp_out.open(fileName);
+	if (!ofstreamGood(programcpp_out, fileName)) return 0;
+	programcpp_out << strProgramcpp << endl;
+	programcpp_out.close();
 	
-	//output.open(fileName.replace(fileName.find_last_of("\\"), fileName.size() - fileName.find_last_of("\\"), "ProgramList.h"));
-	if (!output.good()) 
-	{
-		std::cout << "problem creating Program.h" << endl;
-		return 0;
-	}
-	
-	
+	remove("programOld.cpp");
+	rename("program.cpp", "programOld.cpp");
+	rename("programNew.cpp", "program.cpp");
 
+	std::cout << "press any button to continue..." << endl;
+	std::cin.ignore();
+
+
+
+
+	/* OLD CODE
 	int program = 1;
 	string outputString;
 	string tempProgramArray;
@@ -181,17 +210,6 @@ int main(int argc, char* argv[])
 		"};\n\n"
 	);
 
-	// count number of programs in file
-	int programCount = 1;
-	while (std::getline(input, readLine))
-	{
-		if ( readLine.find(std::to_string(programCount) + ".") != string::npos)
-		{
-			programCount++;
-		}
-	}
-	outputString.append("ProgramArray = new int[" + std::to_string(programCount-1) + "]; \n\n");
-	std::cout << "Number of programs: " + std::to_string(programCount) << endl;
 	
 	// go back to beginning of file
 	//input.seekg(0);
@@ -242,7 +260,7 @@ int main(int argc, char* argv[])
 	
 	std::cout << "press any button to continue..." << endl;
 	std::cin.ignore();
-
+	*/
 	return 0;
 }
 
