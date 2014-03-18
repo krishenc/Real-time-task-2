@@ -6,8 +6,37 @@
 #include "Button.h"
 #include "SoftTimer.h"
 #include "program.h"
-#include "Manager.h"
 #include <iostream>
+
+
+class Manager
+{	
+	public:
+		void StartSelectedProgram(int, Button, Buzzer, SevenSeg, Motor);
+		void PauseProgram();
+		void ResumeProgram();
+		void ResetProgram();
+		void AdvanceStage();
+};
+
+void Manager::StartSelectedProgram(int selectedProgram, Button Door, Buzzer Buzzer1, SevenSeg Seg, Motor Motor1)
+{
+	// If the door is open sound buzzer
+	if(!Door.GetButtonState())
+	{
+		Buzzer1.BuzzSMS();
+	}
+	// If door is closed continue...
+	else
+	{
+		// Update display
+		Seg.UpdateDisplay(Program[selectedProgram].status);
+		// Update motor control
+		Motor1.SetDirection(false); // Initialise direction
+		Motor1.SetDrive(Program[selectedProgram].motorControl);
+		// Start timer
+	}
+}
 
 
 // Program that tests the driver functionality
@@ -72,7 +101,7 @@ int main ()
 	
 	
 	// Start the selected program
-	Manager1.StartSelectedProgram(selectedProgram);
+	Manager1.StartSelectedProgram(selectedProgram, Door, Buzzer1, Seg, Motor1);
 	
 	
 	/*

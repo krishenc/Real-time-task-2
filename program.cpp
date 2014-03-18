@@ -4,7 +4,7 @@ WashCycle::WashCycle()
 {
 	Status = 0;
 	Time = 0;
-	Speed = 0;
+	motorControl = 0;
 }
 
 void WashCycle::SetData(int status, int time, int motorControl)
