@@ -1,9 +1,9 @@
 class Manager
 {	
 	public:
-		StartSelectedProgram(int);
-		PauseProgram();
-		ResumeProgram();
-		ResetProgram();
-		AdvanceStage();
+		void StartSelectedProgram(int);
+		void PauseProgram();
+		void ResumeProgram();
+		void ResetProgram();
+		void AdvanceStage();
 };

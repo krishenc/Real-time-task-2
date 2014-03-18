@@ -15,7 +15,8 @@
 #define MotorSpeedOff 0
 
 #define Off 0
-#define On 1
+#define Low 1
+#define High 2
 
 class WashCycle
 { 

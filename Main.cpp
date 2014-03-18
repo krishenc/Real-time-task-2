@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "SoftTimer.h"
 #include "program.h"
+#include "Manager.h"
 #include <iostream>
 
 
@@ -15,7 +16,7 @@ int main ()
 	int i; // loop variable for testing
 	
 	// An instance of Manager class
-	//Manager Manager1;
+	Manager Manager1;
 	
 	// An instance of comm class
 	comm ARMBoard;
@@ -40,21 +41,24 @@ int main ()
    	int selectedProgram = 0; // This is used to get the program selection from the user
    	bool validProgramSelection = false; // Make sure the selected program is valid
    	
+   	
+   	// Get the program selected by the user
 	while (!validProgramSelection)
 	{
+		selectedProgram = 0; // Reset selectedProgram incase validProgramSeection was false
 		if (Accept.GetButtonState())
 		{
 			if (Prog1.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 1; // Populate the least significant bit in selectedProgram
+				selectedProgram = selectedProgram | 1; // Populate the first bit in selectedProgram
 			}
 			if (Prog2.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 2; // Populate the middle bit in selectedProgram
+				selectedProgram = selectedProgram | 2; // Populate the seccond bit in selectedProgram
 			}
 			if (Prog3.GetButtonState())
 			{
-				selectedProgram = selectedProgram | 4; // Populate the most significant bit in selectedProgram
+				selectedProgram = selectedProgram | 4; // Populate the third bit in selectedProgram
 			}
 			
 			// Make sure the user cant select a program that does not exist
@@ -65,7 +69,11 @@ int main ()
 			
 		}
 	}
-	cout << "Valid program selected : " << selectedProgram;
+	
+	
+	// Start the selected program
+	Manager1.StartSelectedProgram(selectedProgram);
+	
 	
 	/*
 	// Loop until the test is complete and the user wishes to exit

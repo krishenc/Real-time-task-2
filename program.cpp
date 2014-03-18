@@ -7,11 +7,11 @@ WashCycle::WashCycle()
 	Speed = 0;
 }
 
-void WashCycle::SetData(int status, int time, int speed)
+void WashCycle::SetData(int status, int time, int motorControl)
 {
 	Status = status;
 	Time = time;
-	Speed = speed;
+	motorControl = motorControl;
 }
 
 
