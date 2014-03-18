@@ -5,7 +5,7 @@
 #include "Motor.h"
 #include "Button.h"
 #include "SoftTimer.h"
-//#include "programlist.h"
+#include "program.h"
 #include <iostream>
 
 
@@ -39,7 +39,7 @@ int main ()
 	
    	int selectedProgram = 0; // This is used to get the program selection from the user
    	bool validProgramSelection = false; // Make sure the selected program is valid
-   	/*
+   	
 	while (!validProgramSelection)
 	{
 		if (Accept.GetButtonState())
@@ -58,13 +58,13 @@ int main ()
 			}
 			
 			// Make sure the user cant select a program that does not exist
-			if (selectedProgram <= NumberofPrograms)
+			if (selectedProgram <= MaxPrograms)
 			{
 				validProgramSelection = true;
 			}
 			
 		}
-	}*/
+	}
 	cout << "Valid program selected : " << selectedProgram;
 	
 	/*

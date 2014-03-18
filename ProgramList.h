@@ -25,8 +25,6 @@ void WashCycle::SetData(int status, int time, int speed)
 	Time = time;
 	Speed = speed;
 }
-
-int * ProgramArray = new int[2]; 
   
 
 // CANNOT DO THIS

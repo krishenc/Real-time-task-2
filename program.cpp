@@ -1,37 +1,30 @@
 #include "program.h"
 
-#define MaxPrograms = 10
+WashCycle::WashCycle()
+{
+	Status = 0;
+	Time = 0;
+	Speed = 0;
+}
 
-#define Empty 1
-#define Fill 2
-#define Heat 3
-#define Wash 4
-#define Rinse 5
-#define Spin 6
-#define Dry 7
-#define Complete 8
+void WashCycle::SetData(int status, int time, int speed)
+{
+	Status = status;
+	Time = time;
+	Speed = speed;
+}
 
-#define MotorSpeedHigh 2
-#define MotorSpeedLow 1
-#define MotorSpeedOff 0
+
 
 
 Program::Program()
 {
-	Programs = new WashCycle*[MaxPrograms];
-	
-	Programs[0] = new WashCycle[MaxCycles] {
-		WashCycle(Fill,	5,	Off),
-		WashCycle(Fill,	5,	Off),
-		WashCycle(Complete, 0, Off)
-	}
-	
-	Programs[1] = new WashCycle[MaxCycles] {
-		WashCycle(Spin, 6, High),
-		WashCycle(Rinse, 8, Low),
-		WashCycle(Complete, 0, Off)
-	}
-	
+	Programs[0][0] = WashCycle();
+	Programs[0][1] = WashCycle();
+	Programs[0][2] = WashCycle();
+	Programs[1][0] = WashCycle();
+	Programs[1][1] = WashCycle();
+	Programs[1][2] = WashCycle();
 }
 
 
