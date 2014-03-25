@@ -33,9 +33,12 @@ void PWM_Regs::setPWM2(u32 speed) volatile
 {
 	C2_TC = 8;
 	C2_DC = speed;
+	C2_ENB = 1;
 	C2_DIV = 2;
 	C2_SYNC = 0;
 	C2_INV = 0;
+	
+	
 }
 
 PWMcontrol::PWMcontrol() 
@@ -48,7 +51,7 @@ PWMcontrol::PWMcontrol()
 void PWMcontrol::SetPWM(u32 speed)
 {
 	if(speed==0) PWMManager->setPWM2(0);
-	if(speed==1) PWMManager->setPWM2(4);
+	if(speed==1) PWMManager->setPWM2(3);
 	if(speed==2) PWMManager->setPWM2(8);
 		
 

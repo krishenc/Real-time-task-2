@@ -19,6 +19,7 @@ Manager::Manager()
 
 void Manager::Start()
 {
+	/*
 	// get selected program from buttons
 	u32 selectedProgram = getSelectedProgram();		// wait for input
 	
@@ -39,7 +40,9 @@ void Manager::Start()
 	if(Prog1.GetButtonState()) Motor1.SetDrive(0);
 	if(Prog2.GetButtonState()) Motor1.SetDrive(1);
 	if(Prog3.GetButtonState()) Motor1.SetDrive(2);
+	*/
 	
+	Motor1.SetDrive(1);
 	
 	// status, time, motor control
 	
