@@ -36,7 +36,9 @@ void Manager::Start()
 	// run stage
 	Motor1.SetDrive(currentCycle.GetMotorControl());
 	
-
+	if(Prog1.GetButtonState()) Motor1.SetDrive(0);
+	if(Prog2.GetButtonState()) Motor1.SetDrive(1);
+	if(Prog3.GetButtonState()) Motor1.SetDrive(2);
 	
 	
 	// status, time, motor control

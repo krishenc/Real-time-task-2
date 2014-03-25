@@ -3,6 +3,8 @@
 #define MotorDirBit 0x20
 #define MotorSpeedMask 0x40
 
+#include "Interrupt.h"
+
 // Motor class provides interface to the motor
 class Motor
 {
@@ -10,6 +12,7 @@ class Motor
 		// Reference used to access hardware ports
 		comm *ARMBoard;
 		bool pwmMode;
+		PWMcontrol PWM;
 		
 	public:
 		// default constructor
@@ -19,8 +22,6 @@ class Motor
 		// for accessing hardware port
 		Motor(comm*);
 		
-		// Function set the motor ON or OFF
-		void SetDrive(bool);
 		
 		// Set motor function using PWM
 		void SetDrive(u32);

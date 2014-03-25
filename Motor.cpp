@@ -31,34 +31,19 @@ Motor::Motor(comm* Comms)
 }
 
 // Function set the motor ON or OFF
-void Motor::SetDrive(bool drive)
-{
-	u32 PortB = ARMBoard->GetLocalPortB();
-	if (drive == true)
-	{
-		PortB = PortB | MotorBit;
-		ARMBoard->SetPortB(PortB);
-	}
-	else
-	{
-		PortB = PortB & (~MotorBit);
-		ARMBoard->SetPortB(PortB);
-	}
-} 
-
 void Motor::SetDrive(u32 drive)
 {
 	if (drive == Off)
 	{
-	
+		PWM.SetPWM(drive);
 	}
 	else if (drive == Low)
 	{
-	
+		PWM.SetPWM(drive);
 	}
 	else if (drive == High)
 	{
-	
+		PWM.SetPWM(drive);
 	}
 }
 

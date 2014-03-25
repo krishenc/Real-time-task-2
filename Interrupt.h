@@ -1,3 +1,5 @@
+#include "types.h"
+
 class IC_Regs 
 {
 	private:
@@ -9,10 +11,10 @@ class IC_Regs
 		u32 IRQSR;
 		u32 FIQSR;
 		u32 IPR;		
-	public;
-		void setICR1(u32);
-		void setIRQER(u32);
-}
+	public:
+		void setICR1(u32) volatile;
+		void setIRQER(u32)volatile ;
+};
 
 class InterruptController
 {
@@ -24,7 +26,7 @@ class InterruptController
 	public:
 		InterruptController();
 		
-}
+};
 
 
 #define PWM_DISABLE 0x00
@@ -70,7 +72,11 @@ private:
   u32 CA_DIV;   //Only lowest 8 bits used. Offset 0x6C
   u32 CA_SYNC;  //Only lowest 8 bits used. Offset 0x70
   u32 CA_INV;   //Only lowest 8 bits used. Offset 0x74
-}
+  
+public:
+	PWM_Regs();
+	void setPWM2(u32) volatile;  
+};
 
 
 #define PWM_Clock 0x80
@@ -91,8 +97,8 @@ private:
 	u32 CCCR;     //Offset 28
 	
 public:
-	void setPCSR();
-}
+	void setPCSR() volatile;
+};
 
 #define Off 0
 #define Low 1
@@ -106,4 +112,4 @@ private:
 public:
 	PWMcontrol();	
 	void SetPWM(u32);
-}
+};
