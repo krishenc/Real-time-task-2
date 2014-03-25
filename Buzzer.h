@@ -15,6 +15,8 @@ class Buzzer
 		void Off();
 	
 	public:
+		// default constructor
+		Buzzer();
 		// Constructor function requires reference to comm class
 		// for accessing hardware port
 		Buzzer(comm*);

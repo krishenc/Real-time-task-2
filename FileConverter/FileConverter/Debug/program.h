@@ -1,5 +1,6 @@
-#define MaxPrograms 3
-#define MaxCycles 10
+// Generated program.h file
+#define MaxPrograms 4
+#define MaxCycles 11
 
 
 #define Empty 1
@@ -46,5 +47,15 @@ class Program
 		void SetProgram(int);
 		int GetNextStage();	
 };
+
+
+
+
+
+
+
+
+
+
 
 

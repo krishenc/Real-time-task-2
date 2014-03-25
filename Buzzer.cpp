@@ -1,6 +1,12 @@
 #include "PPI.h"
 #include "Buzzer.h"
 
+// default constructor
+Buzzer::Buzzer()
+{
+	ARMBoard = new comm;
+}
+
 // Constructor function requires reference to comm class
 // for accessing hardware port
 Buzzer::Buzzer(comm *Comms)

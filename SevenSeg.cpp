@@ -2,6 +2,12 @@
 #include "PPI.h"
 #include "SevenSeg.h"
 
+// default constructor
+SevenSeg::SevenSeg()
+{
+	ARMBoard = new comm;
+}
+
 // Constructor function requires reference to comm class
 // for accessing hardware port
 SevenSeg::SevenSeg(comm* Comms)

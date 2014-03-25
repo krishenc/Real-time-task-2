@@ -12,9 +12,9 @@ bool fstreamGood(const fstream &stream, const string fileName)
 {
 	if (!stream.good()) 
 	{
-		std::cout << "file " + fileName + " not found." << endl;
-		std::cout << "press any button to continue..." << endl;
-		std::cin.ignore();
+		cout << "file " + fileName + " not found." << endl;
+		cout << "press any button to continue..." << endl;
+		cin.ignore();
 		return false;
 	}
 	else
@@ -26,9 +26,9 @@ bool ifstreamGood(const ifstream &stream, const string fileName)
 {
 	if (!stream.good()) 
 	{
-		std::cout << "file " + fileName + " not found." << endl;
-		std::cout << "press any button to continue..." << endl;
-		std::cin.ignore();
+		cout << "file " + fileName + " not found." << endl;
+		cout << "press any button to continue..." << endl;
+		cin.ignore();
 		return false;
 	}
 	else
@@ -40,9 +40,9 @@ bool ofstreamGood(const ofstream &stream, const string fileName)
 {
 	if (!stream.good()) 
 	{
-		std::cout << "file " + fileName + " not found." << endl;
-		std::cout << "press any button to continue..." << endl;
-		std::cin.ignore();
+		cout << "file " + fileName + " not found." << endl;
+		cout << "press any button to continue..." << endl;
+		cin.ignore();
 		return false;
 	}
 	else
@@ -74,14 +74,37 @@ int main(int argc, char* argv[])
 	// count the number of program declarations in the file
 	cout << "Counting number of programs in programs.txt" << endl;
 	int programCount = 0;
-	while (std::getline(programtxt, readLine))
+	while (getline(programtxt, readLine))
 	{
-		if ( readLine.find(std::to_string(programCount+1) + ":") != string::npos)
+		if ( readLine.find(to_string(programCount+1) + ":") != string::npos)
 		{
 			programCount++;
 		}
 	}
-	cout << "Found " + std::to_string(programCount) + " programs." << endl;
+	cout << "Found " + to_string(programCount) + " programs." << endl;
+	
+	// go back to begenning of file
+	programtxt.clear();
+	programtxt.seekg(0,ios::beg);
+
+	// figure out what the maximum number of cycles is for any program
+	int cycleCount = 0;
+	int program = 0;
+	while (getline(programtxt, readLine))
+	{
+		int cycle = 0;
+		if ( readLine.find(to_string(program+1) + ":") != string::npos)
+		{
+			program++;
+			cycle = 0;
+			while(readLine.find("Complete") == string::npos)
+			{
+				getline(programtxt, readLine);
+				cycle++;
+			}
+			if (cycle > cycleCount) cycleCount = cycle;
+		}
+	}
 	programtxt.close();
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,11 +119,15 @@ int main(int argc, char* argv[])
 	// write to temp string, but with line replacement
 	cout << "Replacing #define MaxPrograms..." << endl;
 	string strProgramh;
-	while (std::getline(programh_in, readLine))
+	while (getline(programh_in, readLine))
 	{
 		if ( readLine.find("#define MaxPrograms") != string::npos)
 		{
-			readLine = "#define MaxPrograms " + std::to_string(programCount);
+			readLine = "#define MaxPrograms " + to_string(programCount);
+		}
+		if ( readLine.find("#define MaxCycles") != string::npos)
+		{
+			readLine = "#define MaxCycles " + to_string(cycleCount);
 		}
 		strProgramh.append(readLine + "\n");
 	}
@@ -131,20 +158,20 @@ int main(int argc, char* argv[])
 	// build constructor function definition from txt file
 	cout << "building new constructor function..." << endl;
 	string constructorFunction;
-	int program = 0;
-	while(std::getline(programtxt, readLine))
+	program = 0;
+	while(getline(programtxt, readLine))
 	{
 		int cycle = 0;
 		// look for new program definition i.e. 1:ColourWash
-		if ( readLine.find(std::to_string(program+1) + ":") != string::npos)
+		if ( readLine.find(to_string(program+1) + ":") != string::npos)
 		{
 			program++;
 			cycle = 0;
 			// look for final cycle definition
 			while(readLine.find("Complete") == string::npos)
 			{
-				std::getline(programtxt, readLine);
-				constructorFunction.append("\tPrograms[" + std::to_string(program) + "][" + std::to_string(cycle++) + "]");
+				getline(programtxt, readLine);
+				constructorFunction.append("\tPrograms[" + to_string(program-1) + "][" + to_string(cycle++) + "]");
 				constructorFunction.append(" = WashCycle(" + readLine + "); \n");
 			}
 		}
@@ -159,7 +186,7 @@ int main(int argc, char* argv[])
 
 	// append file to temporary string until we find Program::Program()
 	string strProgramcpp;
-	while (std::getline(programcpp_in, readLine))
+	while (getline(programcpp_in, readLine))
 	{
 		if ( readLine.find("Program::Program()") != string::npos)
 		{
@@ -183,8 +210,8 @@ int main(int argc, char* argv[])
 	rename("program.cpp", "programOld.cpp");
 	rename("programNew.cpp", "program.cpp");
 
-	std::cout << "press any button to continue..." << endl;
-	std::cin.ignore();
+	cout << "press any button to continue..." << endl;
+	cin.ignore();
 
 
 
@@ -194,8 +221,8 @@ int main(int argc, char* argv[])
 	string outputString;
 	string tempProgramArray;
 	string programName;
-	std::size_t dotPos = 0;
-	std::cout << "strings defined"<< endl;
+	size_t dotPos = 0;
+	cout << "strings defined"<< endl;
 	outputString.append("//This file is created automatically from the programs.txt\n\n");
 	outputString.append("class ProgramData\n"
 		"{ \n"
@@ -215,20 +242,20 @@ int main(int argc, char* argv[])
 	//input.seekg(0);
 	input.close();
 	input.open("Programs.txt");
-	std::cout << "Back to start of input file" << endl;
+	cout << "Back to start of input file" << endl;
 
-	while (std::getline(input, readLine))
+	while (getline(input, readLine))
 	{
 		int cycle = 0;
-		std::cout << "line read " + std::to_string(program) + "." << endl;
+		cout << "line read " + to_string(program) + "." << endl;
 
-		if ( readLine.find(std::to_string(program) + ".") != string::npos)
+		if ( readLine.find(to_string(program) + ".") != string::npos)
 		{
-			std::cout << "finding first ."<< endl;
+			cout << "finding first ."<< endl;
 			cycle = 0;
 			
 			dotPos = readLine.find(".");
-			std::cout << "dotPos: " + std::to_string(dotPos) << endl;
+			cout << "dotPos: " + to_string(dotPos) << endl;
 			programName = readLine.substr(dotPos+1,readLine.size());
 			tempProgramArray = "";
 
@@ -236,30 +263,30 @@ int main(int argc, char* argv[])
 			
 			while(readLine.find("Complete") == string::npos)
 			{
-				std::getline(input, readLine);
-				std::cout << "reading line: " + readLine << endl;
-				tempProgramArray.append(programName + "[" + std::to_string(cycle++) + "].SetData(");
+				getline(input, readLine);
+				cout << "reading line: " + readLine << endl;
+				tempProgramArray.append(programName + "[" + to_string(cycle++) + "].SetData(");
 				tempProgramArray.append(readLine + "); \n");
 			}
 
 			outputString.append("//" + programName + " is defined below\n");
 
-			outputString.append(programName + " = new ProgramData[" + std::to_string(cycle) + "]; \n");
+			outputString.append(programName + " = new ProgramData[" + to_string(cycle) + "]; \n");
 			
 			outputString.append(tempProgramArray);
 
-			outputString.append("ProgramArray[" +  std::to_string(program-1) + "] = " + programName + "*; \n\n");
+			outputString.append("ProgramArray[" +  to_string(program-1) + "] = " + programName + "*; \n\n");
 			program++;
 		}
 	}
-	outputString.append("#define NumberofPrograms " + std::to_string(program-1));
+	outputString.append("#define NumberofPrograms " + to_string(program-1));
 	input.close();
 	
 	output << outputString << endl;
 	output.close();
 	
-	std::cout << "press any button to continue..." << endl;
-	std::cin.ignore();
+	cout << "press any button to continue..." << endl;
+	cin.ignore();
 	*/
 	return 0;
 }

@@ -1,3 +1,5 @@
+
+
 // Bitmasks for each of the buttons
 #define AcceptMask 0x20
 #define CancelMask 0x10
@@ -17,6 +19,9 @@ class Button
 		u32 ButtonMask;
 
 	public:
+		// default constructor
+		Button();
+		
 		// Constructor function requires reference to comm class
 		// for accessing hardware port
 		Button(comm*, u32);

@@ -1,7 +1,8 @@
-#define MaxPrograms 2
-#define MaxCycles 10
+// Generated program.h file
+#define MaxPrograms 4
+#define MaxCycles 11
 
-
+// statuses
 #define Empty 1
 #define Fill 2
 #define Heat 3
@@ -11,10 +12,7 @@
 #define Dry 7
 #define Complete 8
 
-#define MotorSpeedHigh 2
-#define MotorSpeedLow 1
-#define MotorSpeedOff 0
-
+// motor control 
 #define Off 0
 #define Low 1
 #define High 2
@@ -22,13 +20,16 @@
 class WashCycle
 { 
 	private:
-		int Status;
-		int Time;
-		int motorControl;
+		u32 Status;
+		u32 Time;
+		u32 motorControl;
 
 	public:
 		WashCycle();
-		void SetData(int, int, int);
+		WashCycle(u32, u32, u32);
+		u32 GetStatus();
+		u32 GetTime();
+		u32 GetMotorControl();
 };
 
 class Program
@@ -36,14 +37,23 @@ class Program
 	private:
 		WashCycle Programs[MaxPrograms][MaxCycles];
 
-		int currentProgram;
-		int currentCycle;
+		u32 currentProgram;
+		u32 currentCycle;
 		
 		
 	public:
 		Program();
 
-		void SetProgram(int);
-		int GetNextStage();	
+		void SetProgram(u32);
+		WashCycle GetNextCycle();	
+		u32 GetCurrentCycleIndex();
 };
+
+
+
+
+
+
+
+
 

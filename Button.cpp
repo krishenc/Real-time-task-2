@@ -1,6 +1,12 @@
 #include "PPI.h"
 #include "Button.h"
 
+// default constructor
+Button::Button()
+{
+	ARMBoard = new comm;
+}
+
 // Constructor function requires reference to comm class
 // for accessing hardware port
 Button::Button(comm * Comms, u32 bitmask)

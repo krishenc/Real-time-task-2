@@ -9,6 +9,9 @@ class SevenSeg
 		comm *ARMBoard;
 		
 	public:
+		//default constructor
+		SevenSeg();
+		
 		// Constructor function requires reference to comm class
 		// for accessing hardware port
 		SevenSeg(comm*);
