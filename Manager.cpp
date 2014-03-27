@@ -19,7 +19,7 @@ Manager::Manager()
 
 void Manager::Start()
 {
-	/*
+	Seg.ClearDisplay();
 	// get selected program from buttons
 	u32 selectedProgram = getSelectedProgram();		// wait for input
 	
@@ -31,36 +31,82 @@ void Manager::Start()
 	}
 	
 	program.SetProgram(selectedProgram);
-	WashCycle currentCycle = program.GetNextCycle();
+	currentCycle = program.GetNextCycle();
+	Seg.UpdateDisplay(currentCycle->GetStatus());	// display the wash cycle status index
+	while ( currentCycle->GetStatus() != Complete )
+	{
+		// run stage
+		Motor1.SetDrive(currentCycle->GetMotorControl());
+		
+		float waitTime = 0.05; // seconds
+		float imax = currentCycle->GetTime() * 1/waitTime;
+		for (u32 i = 0; i < imax; i++)
+		{
+			Timer.Wait(waitTime);
+			// poll door
+			if (!Door.GetButtonState())		// door is open
+			{
+				// pause execution until door is closed again
+				PauseProgram();
+				Buzzer1.BuzzSMS();
+				while( !Door.GetButtonState() ) 
+				{
+					Seg.ClearDisplay();
+					Timer.Wait((float)0.1);
+					Seg.UpdateDisplay(currentCycle->GetStatus());
+					Timer.Wait((float)0.1);
+				}
+				ResumeProgram();
+			}
+			// poll accept button
+			if (Accept.GetButtonState())	// button is pressed
+			{
+				// go to the next wash cycle
+				i = imax; // exit wash cycle loop
+				Timer.Wait((unsigned int)1);
+			}
+			// poll cancel button
+			if (Cancel.GetButtonState())	// button is pressed
+			{
+				PauseProgram();
+				Timer.Wait((unsigned int)1);
+				bool input = false;
+				while (input == false)
+				{
+					if (Cancel.GetButtonState())
+					{
+						input = true;
+						// stop what you're doin
+						return;
+					}
+					if (Accept.GetButtonState())
+					{
+						input = true;
+						ResumeProgram();
+					}
+					Seg.ClearDisplay();
+					Timer.Wait((float)0.1);
+					Seg.UpdateDisplay(currentCycle->GetStatus());
+					Timer.Wait((float)0.1);
+				}
+			}
+		}
+		currentCycle = program.GetNextCycle(); 
+		Seg.UpdateDisplay(currentCycle->GetStatus());	// display the wash cycle status index
+	}
 	
-	Seg.UpdateDisplay(currentCycle.GetStatus());	// display the wash cycle status index
-	// run stage
-	Motor1.SetDrive(currentCycle.GetMotorControl());
 	
-	if(Prog1.GetButtonState()) Motor1.SetDrive(0);
-	if(Prog2.GetButtonState()) Motor1.SetDrive(1);
-	if(Prog3.GetButtonState()) Motor1.SetDrive(2);
-	*/
-	
-	Motor1.SetDrive(1);
-	
-	// status, time, motor control
-	
-		// Update display
-		//Seg.UpdateDisplay(program[selectedProgram].status);
-		// Update motor control
-		//Motor1.SetDirection(false); // Initialise direction
-		//Motor1.SetDrive(program[selectedProgram].motorControl);
-		// Start timer
 	
 }
 
 void Manager::PauseProgram()
 {
+	Motor1.SetDrive(0);
 }
 
 void Manager::ResumeProgram()
 {
+	Motor1.SetDrive(currentCycle->GetMotorControl());
 }
 
 void Manager::ResetProgram()

@@ -4,6 +4,12 @@
 // in secs
 void SoftTimer::Wait(u32 TimeSecs)
 {
-	int i;
+	u32 i;
+	for(i=1500000*TimeSecs; i>0; i--);
+}
+
+void SoftTimer::Wait(float TimeSecs)
+{
+	float i;
 	for(i=1500000*TimeSecs; i>0; i--);
 }

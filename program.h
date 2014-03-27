@@ -45,7 +45,7 @@ class Program
 		Program();
 
 		void SetProgram(u32);
-		WashCycle GetNextCycle();	
+		WashCycle * GetNextCycle();	
 		u32 GetCurrentCycleIndex();
 };
 

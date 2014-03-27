@@ -6,4 +6,5 @@ class SoftTimer
 {
 	public:
 		void Wait(u32);
+		void Wait(float);
 };

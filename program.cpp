@@ -41,9 +41,9 @@ void Program::SetProgram(u32 ChosenProgram)
 	currentCycle = -1;	
 }
 
-WashCycle Program::GetNextCycle()
+WashCycle* Program::GetNextCycle()
 {
-	return Programs[currentProgram][currentCycle++];
+	return &Programs[currentProgram][++currentCycle];
 }
 
 u32 Program::GetCurrentCycleIndex()

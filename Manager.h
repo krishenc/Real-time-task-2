@@ -27,8 +27,8 @@ class Manager
 		Button Prog2;
 		Button Prog1;
 		Button Door;
-		SoftTimer Timer1;
+		SoftTimer Timer;
 		Program program;
-		
+		WashCycle* currentCycle;
 		u32 getSelectedProgram();
 };
