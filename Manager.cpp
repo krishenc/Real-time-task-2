@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include <iostream>
 
 Manager::Manager()
 {
@@ -16,6 +17,7 @@ Manager::Manager()
 	Prog1 = Button(&ARMBoard, Prog1Mask);
 	Door = Button(&ARMBoard, DoorMask);
 	Seg.ClearDisplay(); // Clear the display
+	Motor1.SetDrive(Off); // Initialise motor 
 }
 
 void Manager::Start()
@@ -45,6 +47,7 @@ void Manager::Start()
 		float imax = currentCycle->GetTime() * (1/waitTime);
 		for (u32 i = 0; i < imax; i++)
 		{
+			cout << i << endl;
 			Timer.Wait(waitTime);
 			// Poll door
 			if (!Door.GetButtonState())

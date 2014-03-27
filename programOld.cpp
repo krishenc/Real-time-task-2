@@ -91,7 +91,7 @@ Program::Program()
 	Programs[3][4] = WashCycle(Dry,	5,	Off); 
 	Programs[3][5] = WashCycle(Complete,	0,	Off); 
 	Programs[4][0] = WashCycle(Fill,	10,	Off); 
-	Programs[4][1] = WashCycle(Spin,	10,	High); 
+	Programs[4][1] = WashCycle(Spin,	10	High); 
 	Programs[4][2] = WashCycle(Empty,	10,	Off); 
 	Programs[4][3] = WashCycle(Complete,	0,	Off); 
 }
