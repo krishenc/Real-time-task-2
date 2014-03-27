@@ -1,15 +1,14 @@
 #include "Manager.h"
-#include <iostream>
 
 Manager::Manager()
 {
 	// Control port addresses are defined in PPI.h
 	u8 ControlByte = (ModeSel | AMode0 | AInp | BMode0 | BOut | CHInp | CLInp);
 	ARMBoard.UpdateControl ((u32) ControlByte);
-	// Create objects for each part
+	// Create objects
 	Buzzer1 = Buzzer(&ARMBoard);
 	Seg = SevenSeg(&ARMBoard);
-	Motor1 = Motor(&ARMBoard);
+	Motor1 = Motor();
 	Accept = Button(&ARMBoard, AcceptMask);
 	Cancel = Button(&ARMBoard, CancelMask);
 	Prog3 = Button(&ARMBoard, Prog3Mask);
@@ -18,7 +17,6 @@ Manager::Manager()
 	Door = Button(&ARMBoard, DoorMask);
 	Seg.ClearDisplay(); // Clear the display
 }
-
 
 void Manager::Start()
 {
@@ -36,26 +34,25 @@ void Manager::Start()
 	program.SetProgram(selectedProgram);
 	currentCycle = program.GetNextCycle();
 	Seg.UpdateDisplay(currentCycle->GetStatus());	// Display the wash cycle status index
-	float waitTime = 0.05; // Seconds
+	float waitTime = 0.05; // Time to incriment each loop
 	
 	while ( currentCycle->GetStatus() != Complete )
 	{
-		//cout << currentCycle->GetStatus() << " time length is " << currentCycle->GetTime() << endl;
 		// Run stage
 		Motor1.SetDrive(currentCycle->GetMotorControl());	// Set stage motor setting
 		
-		float imax = currentCycle->GetTime() * ((1/waitTime)-1);
-		cout << imax << " Seconds: " << currentCycle->GetTime() <<  endl;
+		// Calculate the ammount of loops to run
+		float imax = currentCycle->GetTime() * (1/waitTime);
 		for (u32 i = 0; i < imax; i++)
 		{
 			Timer.Wait(waitTime);
 			// Poll door
-			if (!Door.GetButtonState())		// door is open
+			if (!Door.GetButtonState())
 			{
 				// Pause execution until door is closed again
 				PauseProgram();
 				Buzzer1.BuzzSMS();
-				while( !Door.GetButtonState() ) 
+				while( !Door.GetButtonState() ) // Flash the stage to indicate the program is paused
 				{
 					Seg.ClearDisplay();
 					Timer.Wait((float)0.1);
@@ -69,20 +66,19 @@ void Manager::Start()
 			{
 				// Go to the next wash cycle
 				i = imax; // exit wash cycle loop
-				Timer.Wait((float)0.5);
+				Timer.Wait((float)0.5);		// allow for button debounce
 			}
 			// Poll cancel button
 			if (Cancel.GetButtonState())	// button is pressed
 			{
 				PauseProgram();
-				Timer.Wait((float)0.5);
+				Timer.Wait((float)0.5);		// allow for button debounce
 				bool input = false;
 				while (input == false)
 				{
 					if (Cancel.GetButtonState())
 					{
 						input = true;
-						// Stop what you're doin
 						ResetProgram();
 						Seg.UpdateDisplay(currentCycle->GetStatus());
 						return;
@@ -105,16 +101,19 @@ void Manager::Start()
 	
 }
 
+// Function to pause program, time is already paused so only drive needs to be paused
 void Manager::PauseProgram()
 {
 	Motor1.SetDrive(0);
 }
 
+// Funciton to resume program
 void Manager::ResumeProgram()
 {
 	Motor1.SetDrive(currentCycle->GetMotorControl());
 }
 
+// Advance stage until complete
 void Manager::ResetProgram()
 {
 	while ( currentCycle->GetStatus() != Complete )
@@ -123,6 +122,7 @@ void Manager::ResetProgram()
 	}
 }
 
+// Advance stage function
 void Manager::AdvanceStage()
 {
 	currentCycle = program.GetNextCycle(); 

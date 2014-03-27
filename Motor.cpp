@@ -1,6 +1,5 @@
 #include "PPI.h"
 #include "Motor.h"
-#include <iostream>
 
 // statuses
 #define Empty 1
@@ -17,50 +16,8 @@
 #define Low 1
 #define High 2
 
-// default constructor
-Motor::Motor()
-{
-	ARMBoard = new comm;
-}
-
-// Constructor function requires reference to comm class
-// for accessing hardware port
-Motor::Motor(comm* Comms)
-{
-	ARMBoard = Comms;
-}
-
-// Function set the motor ON or OFF
+// Set motor function using PWM
 void Motor::SetDrive(u32 drive)
 {
-	if (drive == Off)
-	{
-		PWM.SetPWM(drive);
-	}
-	else if (drive == Low)
-	{
-		PWM.SetPWM(drive);
-	}
-	else if (drive == High)
-	{
-		PWM.SetPWM(drive);
-	}
-}
-
-// Function to set the direction of the Motor
-// FALSE = CW, TRUE = ACW
-void Motor::SetDirection(bool direction)
-{
-	u32 PortB = ARMBoard->GetLocalPortB();
-	
-	if (direction == true)
-	{
-		PortB = PortB | MotorDirBit;
-		ARMBoard->SetPortB(PortB);
-	}
-	else
-	{
-		PortB = PortB & (~MotorDirBit);
-		ARMBoard->SetPortB(PortB);
-	}
+	PWM.SetPWM(drive);
 }
