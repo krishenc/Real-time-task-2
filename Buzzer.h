@@ -21,6 +21,6 @@ class Buzzer
 		// for accessing hardware port
 		Buzzer(comm*);
 		
-		// Test function for buzzer
+		// Sound the buzzer SMS
 		void BuzzSMS();
 };

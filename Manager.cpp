@@ -1,10 +1,12 @@
 #include "Manager.h"
+#include <iostream>
 
 Manager::Manager()
 {
 	// Control port addresses are defined in PPI.h
 	u8 ControlByte = (ModeSel | AMode0 | AInp | BMode0 | BOut | CHInp | CLInp);
 	ARMBoard.UpdateControl ((u32) ControlByte);
+	// Create objects for each part
 	Buzzer1 = Buzzer(&ARMBoard);
 	Seg = SevenSeg(&ARMBoard);
 	Motor1 = Motor(&ARMBoard);
@@ -14,39 +16,43 @@ Manager::Manager()
 	Prog2 = Button(&ARMBoard, Prog2Mask);
 	Prog1 = Button(&ARMBoard, Prog1Mask);
 	Door = Button(&ARMBoard, DoorMask);
+	Seg.ClearDisplay(); // Clear the display
 }
 
 
 void Manager::Start()
 {
-	Seg.ClearDisplay();
-	// get selected program from buttons
-	u32 selectedProgram = getSelectedProgram();		// wait for input
+	// Get selected program from buttons
+	u32 selectedProgram = getSelectedProgram();		// Wait for input
 	
-	// if the door is open
+	// If the door is open
 	while (!Door.GetButtonState())
 	{
-		Buzzer1.BuzzSMS();							// sound the buzzer
-		while ( !Accept.GetButtonState() ) {}		// wait for accept button
+		Buzzer1.BuzzSMS();							// Sound the buzzer
+		while ( !Accept.GetButtonState() ) {}		// Wait for accept button
 	}
 	
+	// Set program selection in program class
 	program.SetProgram(selectedProgram);
 	currentCycle = program.GetNextCycle();
-	Seg.UpdateDisplay(currentCycle->GetStatus());	// display the wash cycle status index
+	Seg.UpdateDisplay(currentCycle->GetStatus());	// Display the wash cycle status index
+	float waitTime = 0.05; // Seconds
+	
 	while ( currentCycle->GetStatus() != Complete )
 	{
-		// run stage
-		Motor1.SetDrive(currentCycle->GetMotorControl());
+		//cout << currentCycle->GetStatus() << " time length is " << currentCycle->GetTime() << endl;
+		// Run stage
+		Motor1.SetDrive(currentCycle->GetMotorControl());	// Set stage motor setting
 		
-		float waitTime = 0.05; // seconds
-		float imax = currentCycle->GetTime() * 1/waitTime;
+		float imax = currentCycle->GetTime() * ((1/waitTime)-1);
+		cout << imax << " Seconds: " << currentCycle->GetTime() <<  endl;
 		for (u32 i = 0; i < imax; i++)
 		{
 			Timer.Wait(waitTime);
-			// poll door
+			// Poll door
 			if (!Door.GetButtonState())		// door is open
 			{
-				// pause execution until door is closed again
+				// Pause execution until door is closed again
 				PauseProgram();
 				Buzzer1.BuzzSMS();
 				while( !Door.GetButtonState() ) 
@@ -58,25 +64,27 @@ void Manager::Start()
 				}
 				ResumeProgram();
 			}
-			// poll accept button
+			// Poll accept button
 			if (Accept.GetButtonState())	// button is pressed
 			{
-				// go to the next wash cycle
+				// Go to the next wash cycle
 				i = imax; // exit wash cycle loop
-				Timer.Wait((unsigned int)1);
+				Timer.Wait((float)0.5);
 			}
-			// poll cancel button
+			// Poll cancel button
 			if (Cancel.GetButtonState())	// button is pressed
 			{
 				PauseProgram();
-				Timer.Wait((unsigned int)1);
+				Timer.Wait((float)0.5);
 				bool input = false;
 				while (input == false)
 				{
 					if (Cancel.GetButtonState())
 					{
 						input = true;
-						// stop what you're doin
+						// Stop what you're doin
+						ResetProgram();
+						Seg.UpdateDisplay(currentCycle->GetStatus());
 						return;
 					}
 					if (Accept.GetButtonState())
@@ -91,11 +99,9 @@ void Manager::Start()
 				}
 			}
 		}
-		currentCycle = program.GetNextCycle(); 
+		AdvanceStage();
 		Seg.UpdateDisplay(currentCycle->GetStatus());	// display the wash cycle status index
 	}
-	
-	
 	
 }
 
@@ -111,11 +117,15 @@ void Manager::ResumeProgram()
 
 void Manager::ResetProgram()
 {
+	while ( currentCycle->GetStatus() != Complete )
+	{
+		AdvanceStage();
+	}
 }
 
 void Manager::AdvanceStage()
 {
-	
+	currentCycle = program.GetNextCycle(); 
 }
 
 u32 Manager::getSelectedProgram()
@@ -126,7 +136,7 @@ u32 Manager::getSelectedProgram()
    	// Get the program selected by the user
 	while (!validProgramSelection)
 	{
-		selectedProgram = 0; // Reset selectedProgram incase validProgramSeection was false
+		selectedProgram = 0; // Reset selectedProgram incase validProgramSelction was false
 		if (Accept.GetButtonState())
 		{
 			if (Prog1.GetButtonState())
@@ -143,7 +153,7 @@ u32 Manager::getSelectedProgram()
 			}
 			
 			// Make sure the user cant select a program that does not exist
-			if (selectedProgram <= MaxPrograms)
+			if (selectedProgram < MaxPrograms)
 			{
 				validProgramSelection = true;
 			}

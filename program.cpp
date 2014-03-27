@@ -37,8 +37,8 @@ u32 WashCycle::GetMotorControl()
 
 void Program::SetProgram(u32 ChosenProgram)
 {
-	currentProgram = ChosenProgram;
-	currentCycle = -1;	
+	currentProgram = ChosenProgram;	// Set ChosenProgram based on user input
+	currentCycle = -1;				// Initialise the currentCycle
 }
 
 WashCycle* Program::GetNextCycle()

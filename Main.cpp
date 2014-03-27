@@ -12,7 +12,7 @@ int main ()
 {
 	// An instance of Manager class
 	Manager manager;
-	
+	// Initialiaze display to clear
 	while(true)
 	{
 		// Start the washing machine software
