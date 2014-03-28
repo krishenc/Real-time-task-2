@@ -9,11 +9,6 @@ void CPMU_Regs::setPCSR() volatile
 // initialises the pwm control information
 PWM_Regs::PWM_Regs(){
 	setPWM2(0);
-	C2_TC = 8;
-	C2_ENB = 1;
-	C2_DIV = 2;
-	C2_SYNC = 0;
-	C2_INV = 0;
 }
 
 // set the control information for the PWM line connected to the motor
