@@ -1,5 +1,5 @@
 // Generated program.h file
-#define MaxPrograms 5
+#define MaxPrograms 2
 #define MaxCycles 11
 
 // statuses
@@ -48,6 +48,7 @@ class Program
 		WashCycle * GetNextCycle();	
 		u32 GetCurrentCycleIndex();
 };
+
 
 
 

@@ -26,29 +26,3 @@ Spin,	8,	High
 Spin,	4,	Low
 Dry,	5,	Off
 Complete,	0,	Off
-
-3:MixedWash
-Fill,	7,	Off
-Heat,	4,	Off
-Wash,	6,	Low
-Empty,	3,	Off
-Fill,	5,	Off
-Rinse,	7,	Low
-Empty,	3,	Off
-Spin,	6,	High
-Dry,	5,	Off
-Complete,	0,	Off
-
-4:Economywash
-Fill,	7,	Off
-Heat,	4,	Off
-Wash,	6,	Low
-Empty,	3,	Off
-Dry,	5,	Off
-Complete,	0,	Off
-
-5:Program1
-Fill,	10,	Off
-Spin,	10,	High
-Empty,	10,	Off
-Complete,	0,	Off
