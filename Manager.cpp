@@ -37,6 +37,7 @@ void Manager::Start()
 	currentCycle = program.GetNextCycle();
 	Seg.UpdateDisplay(currentCycle->GetStatus());	// Display the wash cycle status index
 	float waitTime = 0.05; // Time to incriment each loop
+	u32 i = 0;
 	
 	while ( currentCycle->GetStatus() != Complete )
 	{
@@ -45,9 +46,9 @@ void Manager::Start()
 		
 		// Calculate the ammount of loops to run
 		float imax = currentCycle->GetTime() * (1/waitTime);
-		for (u32 i = 0; i < imax; i++)
+		for (i = 0; i < imax; i++)
 		{
-			cout << i << endl;
+			//cout << i << " from " << imax << endl;
 			Timer.Wait(waitTime);
 			// Poll door
 			if (!Door.GetButtonState())
@@ -55,7 +56,7 @@ void Manager::Start()
 				// Pause execution until door is closed again
 				PauseProgram();
 				Buzzer1.BuzzSMS();
-				while( !Door.GetButtonState() ) // Flash the stage to indicate the program is paused
+				while( !Door.GetButtonState() ) // flash display to show program is paused
 				{
 					Seg.ClearDisplay();
 					Timer.Wait((float)0.1);
@@ -79,6 +80,7 @@ void Manager::Start()
 				bool input = false;
 				while (input == false)
 				{
+					// if cancel button pressed again, reset program
 					if (Cancel.GetButtonState())
 					{
 						input = true;
@@ -86,17 +88,20 @@ void Manager::Start()
 						Seg.UpdateDisplay(currentCycle->GetStatus());
 						return;
 					}
+					// if accept button pressed, resume
 					if (Accept.GetButtonState())
 					{
 						input = true;
 						ResumeProgram();
 					}
+					// flash display to show program is paused
 					Seg.ClearDisplay();
 					Timer.Wait((float)0.1);
 					Seg.UpdateDisplay(currentCycle->GetStatus());
 					Timer.Wait((float)0.1);
 				}
 			}
+			i++;	
 		}
 		AdvanceStage();
 		Seg.UpdateDisplay(currentCycle->GetStatus());	// display the wash cycle status index
@@ -116,7 +121,7 @@ void Manager::ResumeProgram()
 	Motor1.SetDrive(currentCycle->GetMotorControl());
 }
 
-// Advance stage until complete
+// Advance stage until complete to reset
 void Manager::ResetProgram()
 {
 	while ( currentCycle->GetStatus() != Complete )
